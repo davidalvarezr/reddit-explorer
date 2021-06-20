@@ -1,0 +1,32 @@
+{
+  "name": "reddit-auth",
+  "version": "1.0.0",
+  "description": "Get a bearer token from the Reddit API",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/main.js",
+    "prepare": "npm run build",
+    "prepublish": "tsc",
+    "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [],
+  "author": "David Alvarez Restrepo",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "tsc": "^2.0.3",
+    "typescript": "^4.3.4"
+  },
+  "devDependencies": {
+    "prettier": "^2.3.1"
+  }
+}
