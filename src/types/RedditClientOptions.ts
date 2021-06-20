@@ -7,4 +7,5 @@ export type RedditClientOptions = {
     debug?: {
         logToken: boolean
     }
+    matureContent?: boolean
 }

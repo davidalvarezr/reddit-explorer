@@ -1,22 +1,16 @@
-import { RedditClientOptions } from "./types/RedditClientOptions"
+import { RedditClientOptions } from "./types"
 import { defaultConfig } from "./constants/defaultConfig"
 import { endpoints } from "./constants/endpoints"
 import { uuidv4 } from "./helpers/uuidv4"
 import axios from "axios"
-import { AccessTokenResponse } from "./types/api/responses/AccessTokenResponse"
-import { SortingMethod } from "./types/api/SortingMethod"
-import { GetSubredditArgs } from "./types/api/requests/GetSubredditArgs"
-import { GetSubreddit } from "./types/api/responses/GetSubreddit"
+import { AccessTokenResponse } from "./types/api/responses"
+import { GetSubredditArgs } from "./types/api/requests"
+import { GetSubreddit } from "./types/api/responses"
+import { GetSubredditNamesArgs } from "./types/api/requests/GetSubredditNamesArgs"
+import { GetSubredditNames } from "./types/api/responses/GetSubredditNames"
 
 export const createRedditClient = (options: RedditClientOptions) => {
-    const {
-        clientId,
-        secret,
-        userAgent,
-        grantType,
-        deviceId = uuidv4(),
-        debug,
-    } = { ...defaultConfig, ...options }
+    const { clientId, secret, userAgent, grantType, deviceId = uuidv4(), debug } = { ...defaultConfig, ...options }
 
     const api = axios.create({
         baseURL: endpoints.baseUrl,
@@ -36,9 +30,7 @@ export const createRedditClient = (options: RedditClientOptions) => {
 
         debug?.logToken && console.log("token", token)
 
-        return {
-            ...config,
-        }
+        return config
     })
 
     /**
@@ -51,33 +43,31 @@ export const createRedditClient = (options: RedditClientOptions) => {
         params.append("grant_type", grantType)
         params.append("device_id", deviceId)
 
-        const response = await axios.post<AccessTokenResponse>(
-            accessToken,
-            params,
-            {
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                    "User-Agent": userAgent,
-                },
-                auth: {
-                    username: clientId,
-                    password: secret,
-                },
-            }
-        )
+        const response = await axios.post<AccessTokenResponse>(accessToken, params, {
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "User-Agent": userAgent,
+            },
+            auth: {
+                username: clientId,
+                password: secret,
+            },
+        })
 
         return response.data
     }
 
-    const getSubreddit = async ({
-        name,
-        sortMethod,
-        ...restArgs
-    }: GetSubredditArgs) => {
-        const response = await api.get<GetSubreddit>(
-            `/r/${name}/${sortMethod}`,
-            { params: restArgs }
-        )
+    /**
+     * Get the content of a subreddit
+     */
+    const getSubreddit = async ({ name, sortMethod, ...restArgs }: GetSubredditArgs) => {
+        const response = await api.get<GetSubreddit>(`/r/${name}/${sortMethod}`, { params: restArgs })
+
+        return response.data
+    }
+
+    const getSubredditNames = async (args: GetSubredditNamesArgs) => {
+        const response = await api.get<GetSubredditNames>("/api/search_reddit_names", { params: args })
 
         return response.data
     }
@@ -85,5 +75,6 @@ export const createRedditClient = (options: RedditClientOptions) => {
     return {
         getAccessToken,
         getSubreddit,
+        getSubredditNames,
     }
 }
