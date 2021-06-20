@@ -10,7 +10,7 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/main.js",
-    "prepare": "npm run build",
+    "prepare": "yarn build",
     "prepublish": "tsc",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write"
   },

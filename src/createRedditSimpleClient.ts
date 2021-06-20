@@ -1,6 +1,6 @@
-import { RedditClientOptions } from "./types/RedditClientOptions"
+import { RedditClientOptions } from "./types"
 import { createRedditClient } from "./createRedditClient"
-import { GetSubredditArgs } from "./types/api/requests/GetSubredditArgs"
+import { GetSubredditArgs } from "./types/api/requests"
 
 /**
  * Same as RedditClient but returns only essentials infos
@@ -15,6 +15,9 @@ export const createRedditSimpleClient = (options: RedditClientOptions) => {
         return subreddit.data.children.map((child) => ({
             title: child.data.title,
             url: child.data.url,
+            subreddit: child.data.subreddit,
+            thumbnail: child.data.thumbnail,
+            permalink: child.data.permalink,
         }))
     }
 
