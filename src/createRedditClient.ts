@@ -1,13 +1,13 @@
-import { RedditClientOptions } from "./types"
 import { defaultConfig } from "./constants/defaultConfig"
 import { endpoints } from "./constants/endpoints"
 import { uuidv4 } from "./helpers/uuidv4"
 import axios from "axios"
-import { AccessTokenResponse } from "./types/api/responses"
-import { GetSubredditArgs } from "./types/api/requests"
-import { GetSubreddit } from "./types/api/responses"
 import { GetSubredditNamesArgs } from "./types/api/requests/GetSubredditNamesArgs"
 import { GetSubredditNames } from "./types/api/responses/GetSubredditNames"
+import { RedditClientOptions } from "./types/RedditClientOptions"
+import { AccessTokenResponse } from "./types/api/responses/AccessTokenResponse"
+import { GetSubredditArgs } from "./types/api/requests/GetSubredditArgs"
+import { GetSubreddit } from "./types/api/responses/GetSubreddit"
 
 export const createRedditClient = (options: RedditClientOptions) => {
     const { clientId, secret, userAgent, grantType, deviceId = uuidv4(), debug } = { ...defaultConfig, ...options }

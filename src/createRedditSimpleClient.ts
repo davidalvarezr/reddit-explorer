@@ -1,7 +1,7 @@
-import { RedditClientOptions } from "./types"
 import { createRedditClient } from "./createRedditClient"
-import { GetSubredditArgs } from "./types/api/requests"
 import { GetSubredditNamesArgs } from "./types/api/requests/GetSubredditNamesArgs"
+import { RedditClientOptions } from "./types/RedditClientOptions"
+import { GetSubredditArgs } from "./types/api/requests/GetSubredditArgs"
 
 /**
  * Same as RedditClient but returns only essentials infos
@@ -16,6 +16,7 @@ export const createRedditSimpleClient = (options: RedditClientOptions) => {
         return subreddit.data.children
             .filter((child) => !(child.data.over_18 && !options.matureContent))
             .map((child) => ({
+                kind: child.kind,
                 title: child.data.title,
                 url: child.data.url,
                 subreddit: child.data.subreddit,
