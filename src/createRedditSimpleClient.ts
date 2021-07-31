@@ -1,7 +1,9 @@
 import { createRedditClient } from "./createRedditClient"
 import { GetSubredditNamesArgs } from "./types/api/requests/GetSubredditNamesArgs"
 import { RedditClientOptions } from "./types/RedditClientOptions"
-import { GetSubredditArgs } from "./types/api/requests/GetSubredditArgs"
+import { SimpleGetSubredditArgs } from "./types/api/requests/GetSubredditArgs"
+import { buildLink } from "./helpers/buildLink"
+import { filterKeys } from "./helpers/filterKeys"
 
 /**
  * Same as RedditClient but returns only essentials infos
@@ -10,10 +12,11 @@ import { GetSubredditArgs } from "./types/api/requests/GetSubredditArgs"
 export const createRedditSimpleClient = (options: RedditClientOptions) => {
     const api = createRedditClient(options)
 
-    const getSubreddit = async (args: GetSubredditArgs) => {
+    const getSubreddit = async (args: SimpleGetSubredditArgs) => {
         const subreddit = await api.getSubreddit(args)
+        const { fields } = args
 
-        return subreddit.data.children
+        const results = subreddit.data.children
             .filter((child) => !(child.data.over_18 && !options.matureContent))
             .map((child) => ({
                 kind: child.kind,
@@ -22,7 +25,12 @@ export const createRedditSimpleClient = (options: RedditClientOptions) => {
                 subreddit: child.data.subreddit,
                 thumbnail: child.data.thumbnail,
                 permalink: child.data.permalink,
+                link: buildLink(child.data.permalink),
             }))
+
+        if (!fields?.length) return results
+
+        return results.map((result) => filterKeys(result, fields))
     }
 
     const getSubredditNames = async (args: GetSubredditNamesArgs) => {
