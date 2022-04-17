@@ -1,6 +1,6 @@
 import { createRedditClient } from "./createRedditClient"
 import { GetSubredditNamesArgs } from "./types/api/requests/GetSubredditNamesArgs"
-import { RedditClientOptions } from "./types/RedditClientOptions"
+import { RedditClientConfiguration } from "./config/RedditClientConfiguration"
 import { SimplePost, SimpleGetSubredditArgs } from "./types/api/requests/GetSubredditArgs"
 import { buildLink } from "./helpers/buildLink"
 import { filterKeys } from "./helpers/filterKeys"
@@ -10,7 +10,7 @@ import { applyLocalTimezoneOffset } from "./helpers/applyLocalTimezoneOffset"
  * Same as RedditClient but returns only essentials infos
  * @param options
  */
-export const createRedditSimpleClient = (options: RedditClientOptions) => {
+export const createRedditSimpleClient = (options: RedditClientConfiguration) => {
     const api = createRedditClient(options)
 
     const getSubreddit = async (args: SimpleGetSubredditArgs) => {

@@ -1,16 +1,16 @@
-import { defaultConfig } from "./constants/defaultConfig"
+import { defaultConfig } from "./config/defaultConfig"
 import { Endpoint } from "./constants/Endpoint"
 import { uuidv4 } from "./helpers/uuidv4"
 import axios from "axios"
 import { GetSubredditNamesArgs } from "./types/api/requests/GetSubredditNamesArgs"
 import { GetSubredditNames } from "./types/api/responses/GetSubredditNames"
-import { RedditClientOptions } from "./types/RedditClientOptions"
+import { RedditClientConfiguration } from "./config/RedditClientConfiguration"
 import { AccessTokenResponse } from "./types/api/responses/AccessTokenResponse"
 import { GetSubredditArgs } from "./types/api/requests/GetSubredditArgs"
 import { GetSubreddit } from "./types/api/responses/GetSubreddit"
 
-export const createRedditClient = (options: RedditClientOptions) => {
-    const { clientId, secret, userAgent, grantType, deviceId = uuidv4(), debug } = { ...defaultConfig, ...options }
+export const createRedditClient = (config: RedditClientConfiguration) => {
+    const { clientId, secret, userAgent, grantType, deviceId = uuidv4(), debug } = { ...defaultConfig, ...config }
 
     const api = axios.create({
         baseURL: Endpoint.BaseUrl,

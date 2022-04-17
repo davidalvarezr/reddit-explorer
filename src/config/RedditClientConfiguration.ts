@@ -1,4 +1,4 @@
-export type RedditClientOptions = {
+export type RedditClientConfiguration = {
     clientId: string
     secret: string
     userAgent?: string
