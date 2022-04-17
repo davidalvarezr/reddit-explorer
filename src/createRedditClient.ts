@@ -1,5 +1,5 @@
 import { defaultConfig } from "./constants/defaultConfig"
-import { endpoints } from "./constants/endpoints"
+import { Endpoint } from "./constants/Endpoint"
 import { uuidv4 } from "./helpers/uuidv4"
 import axios from "axios"
 import { GetSubredditNamesArgs } from "./types/api/requests/GetSubredditNamesArgs"
@@ -13,7 +13,7 @@ export const createRedditClient = (options: RedditClientOptions) => {
     const { clientId, secret, userAgent, grantType, deviceId = uuidv4(), debug } = { ...defaultConfig, ...options }
 
     const api = axios.create({
-        baseURL: endpoints.baseUrl,
+        baseURL: Endpoint.BaseUrl,
     })
 
     let expirationTimestamp = 0
@@ -37,13 +37,11 @@ export const createRedditClient = (options: RedditClientOptions) => {
      * Get access token for unauthenticated user
      */
     const getAccessToken = async () => {
-        const { accessToken } = endpoints
-
         const params = new URLSearchParams()
         params.append("grant_type", grantType)
         params.append("device_id", deviceId)
 
-        const response = await axios.post<AccessTokenResponse>(accessToken, params, {
+        const response = await axios.post<AccessTokenResponse>(Endpoint.AccessToken, params, {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded",
                 "User-Agent": userAgent,
@@ -60,14 +58,14 @@ export const createRedditClient = (options: RedditClientOptions) => {
     /**
      * Get the content of a subreddit
      */
-    const getSubreddit = async ({ name, sortMethod, ...restArgs }: GetSubredditArgs) => {
-        const response = await api.get<GetSubreddit>(`/r/${name}/${sortMethod}`, { params: restArgs })
+    const getSubreddit = async ({ name, sortMethod, ...restParams }: GetSubredditArgs): Promise<GetSubreddit> => {
+        const response = await api.get<GetSubreddit>(`/r/${name}/${sortMethod}`, { params: restParams })
 
         return response.data
     }
 
-    const getSubredditNames = async (args: GetSubredditNamesArgs) => {
-        const response = await api.get<GetSubredditNames>("/api/search_reddit_names", { params: args })
+    const getSubredditNames = async (params: GetSubredditNamesArgs): Promise<GetSubredditNames> => {
+        const response = await api.get<GetSubredditNames>("/api/search_reddit_names", { params })
 
         return response.data
     }

@@ -1,5 +1,3 @@
-import { urls } from "../constants/urls"
+import { Url } from "../constants/Url"
 
-const { redditHost } = urls
-
-export const buildLink = (permalink: string) => `${redditHost}${permalink}`
+export const buildLink = (permalink: string) => `${Url.RedditHost}${permalink}`

@@ -1,9 +1,10 @@
 import { createRedditClient } from "./createRedditClient"
 import { GetSubredditNamesArgs } from "./types/api/requests/GetSubredditNamesArgs"
 import { RedditClientOptions } from "./types/RedditClientOptions"
-import { SimpleGetSubredditArgs } from "./types/api/requests/GetSubredditArgs"
+import { SimplePost, SimpleGetSubredditArgs } from "./types/api/requests/GetSubredditArgs"
 import { buildLink } from "./helpers/buildLink"
 import { filterKeys } from "./helpers/filterKeys"
+import { applyLocalTimezoneOffset } from "./helpers/applyLocalTimezoneOffset"
 
 /**
  * Same as RedditClient but returns only essentials infos
@@ -16,7 +17,7 @@ export const createRedditSimpleClient = (options: RedditClientOptions) => {
         const subreddit = await api.getSubreddit(args)
         const { fields } = args
 
-        const results = subreddit.data.children
+        const results: SimplePost[] = subreddit.data.children
             .filter((child) => !(child.data.over_18 && !options.matureContent))
             .map((child) => ({
                 kind: child.kind,
@@ -26,11 +27,15 @@ export const createRedditSimpleClient = (options: RedditClientOptions) => {
                 thumbnail: child.data.thumbnail,
                 permalink: child.data.permalink,
                 link: buildLink(child.data.permalink),
+                createdAtUtc: new Date(child.data.created_utc * 1000),
+                createdAtLocal: applyLocalTimezoneOffset(new Date(child.data.created_utc * 1000)),
             }))
 
-        if (!fields?.length) return results
-
-        return results.map((result) => filterKeys(result, fields))
+        return {
+            before: subreddit.data.before,
+            after: subreddit.data.after,
+            data: !fields?.length ? results : results.map((result) => filterKeys(result, fields)),
+        }
     }
 
     const getSubredditNames = async (args: GetSubredditNamesArgs) => {
