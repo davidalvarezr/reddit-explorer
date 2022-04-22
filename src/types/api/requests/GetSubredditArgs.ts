@@ -15,7 +15,7 @@ type WithG = {
     g?: string // the locale
 }
 
-type WithT = {
+type WithTimeRange = {
     t?: TimeRange
 }
 
@@ -37,12 +37,12 @@ type Rising = Base & {
 }
 
 type Top = Base &
-    WithT & {
+    WithTimeRange & {
         sortMethod: SortingMethod.Top
     }
 
 type Controversial = Base &
-    WithT & {
+    WithTimeRange & {
         sortMethod: SortingMethod.Controversial
     }
 

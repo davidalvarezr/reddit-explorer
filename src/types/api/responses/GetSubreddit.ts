@@ -16,7 +16,7 @@ export type GetSubreddit = {
     }
 }
 
-type SubredditData = {
+export type SubredditData = {
     approved_at_utc: any
     subreddit: string
     selftext: string
@@ -98,7 +98,7 @@ type SubredditData = {
     content_categories: any
     is_self: boolean
     mod_note: any
-    crosspost_parent_list: SubredditData[]
+    crosspost_parent_list?: SubredditData[]
     created: number
     link_flair_type: string
     wls: number
@@ -201,7 +201,7 @@ type SubredditData = {
     contest_mode: boolean
     mod_reports: []
     author_patreon_flair: boolean
-    crosspost_parent: string
+    crosspost_parent?: string
     author_flair_text_color: null
     // todo: sr_detail
     permalink: string
