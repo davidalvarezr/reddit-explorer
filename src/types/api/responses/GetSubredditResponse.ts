@@ -2,7 +2,7 @@ import { Kind } from "../Kind"
 import { Url } from "../../tags/Url"
 import { IFrame } from "../../tags/IFrame"
 
-export type GetSubreddit = {
+export type GetSubredditResponse = {
     kind: string
     data: {
         modash: string
@@ -211,7 +211,7 @@ export type SubredditData = {
     subreddit_subscribers: number
     created_utc: number
     num_crossposts: number
-    media: {
+    media: null | {
         type: string
         oembed: {
             provider_url: Url

@@ -1,5 +1,5 @@
 import { IMediaParser } from "../IMediaParser"
-import { SubredditData } from "../../types/api/responses/GetSubreddit"
+import { SubredditData } from "../../types/api/responses/GetSubredditResponse"
 import { Quality } from "../Quality"
 import { Extension } from "../Extension"
 import { MediaType } from "../MediaType"

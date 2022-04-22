@@ -3,11 +3,11 @@ import { Endpoint } from "./constants/Endpoint"
 import { uuidv4 } from "./helpers/uuidv4"
 import axios from "axios"
 import { GetSubredditNamesArgs } from "./types/api/requests/GetSubredditNamesArgs"
-import { GetSubredditNames } from "./types/api/responses/GetSubredditNames"
+import { GetSubredditNamesResponse } from "./types/api/responses/GetSubredditNamesResponse"
 import { RedditClientConfiguration } from "./config/RedditClientConfiguration"
 import { AccessTokenResponse } from "./types/api/responses/AccessTokenResponse"
 import { GetSubredditArgs } from "./types/api/requests/GetSubredditArgs"
-import { GetSubreddit } from "./types/api/responses/GetSubreddit"
+import { GetSubredditResponse } from "./types/api/responses/GetSubredditResponse"
 import * as fs from "fs"
 
 const filename = "token.txt"
@@ -84,14 +84,18 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
     /**
      * Get the content of a subreddit
      */
-    const getSubreddit = async ({ name, sortMethod, ...restParams }: GetSubredditArgs): Promise<GetSubreddit> => {
-        const response = await api.get<GetSubreddit>(`/r/${name}/${sortMethod}`, { params: restParams })
+    const getSubreddit = async ({
+        name,
+        sortMethod,
+        ...restParams
+    }: GetSubredditArgs): Promise<GetSubredditResponse> => {
+        const response = await api.get<GetSubredditResponse>(`/r/${name}/${sortMethod}`, { params: restParams })
 
         return response.data
     }
 
-    const getSubredditNames = async (params: GetSubredditNamesArgs): Promise<GetSubredditNames> => {
-        const response = await api.get<GetSubredditNames>("/api/search_reddit_names", { params })
+    const getSubredditNames = async (params: GetSubredditNamesArgs): Promise<GetSubredditNamesResponse> => {
+        const response = await api.get<GetSubredditNamesResponse>("/api/search_reddit_names", { params })
 
         return response.data
     }

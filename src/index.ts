@@ -1,4 +1,30 @@
-import { createRedditClient } from "./createRedditClient"
-import { createRedditSimpleClient } from "./createRedditSimpleClient"
+// Main & config
 
-export { createRedditClient, createRedditSimpleClient }
+import { createRedditClient } from "./createRedditClient"
+import { RedditClientConfiguration } from "./config/RedditClientConfiguration"
+
+// Requests
+
+import { GetSubredditArgs } from "./types/api/requests/GetSubredditArgs"
+import { GetSubredditNamesArgs } from "./types/api/requests/GetSubredditNamesArgs"
+import { SortingMethod } from "./types/api/SortingMethod"
+import { TimeRange } from "./types/api/TimeRange"
+
+// Responses
+
+import { GetSubredditResponse } from "./types/api/responses/GetSubredditResponse"
+import { GetSubredditNamesResponse } from "./types/api/responses/GetSubredditNamesResponse"
+
+export {
+    // Main & config
+    createRedditClient,
+    RedditClientConfiguration,
+    // Requests
+    GetSubredditArgs,
+    GetSubredditNamesArgs,
+    SortingMethod,
+    TimeRange,
+    // Responses
+    GetSubredditResponse,
+    GetSubredditNamesResponse,
+}
