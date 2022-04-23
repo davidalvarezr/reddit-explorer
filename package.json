@@ -1,6 +1,6 @@
 {
   "name": "reddit-explorer",
-  "version": "1.0.0",
+  "version": "1.0-1.0",
   "description": "Simple reddit client that allows to fetch reddit names and content from any subreddit, without any account authentication.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
