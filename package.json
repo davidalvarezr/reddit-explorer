@@ -1,7 +1,7 @@
 {
-  "name": "reddit-auth",
+  "name": "reddit-explorer",
   "version": "1.0.0",
-  "description": "Get a bearer token from the Reddit API",
+  "description": "Simple reddit client that allows to fetch reddit names and content from any subreddit, without any account authentication.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -16,7 +16,7 @@
   },
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/davidalvarezr/reddit-client"
   },
   "keywords": [],
   "author": "David Alvarez Restrepo <devdav@pm.me> (https://github.com/davidalvarezr)",

@@ -12,7 +12,7 @@ import { TimeRange } from "./types/api/TimeRange"
 
 // Responses
 
-import { GetSubredditResponse } from "./types/api/responses/GetSubredditResponse"
+import { GetSubredditResponse, SubredditData } from "./types/api/responses/GetSubredditResponse"
 import { GetSubredditNamesResponse } from "./types/api/responses/GetSubredditNamesResponse"
 
 export {
@@ -26,5 +26,6 @@ export {
     TimeRange,
     // Responses
     GetSubredditResponse,
+    SubredditData,
     GetSubredditNamesResponse,
 }

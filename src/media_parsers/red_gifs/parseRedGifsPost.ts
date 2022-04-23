@@ -5,7 +5,7 @@ import { Extension } from "../Extension"
 import { MediaType } from "../MediaType"
 
 export const parseRedGifsPost = (subredditData: SubredditData): IMediaParser => {
-    const thumbnail = subredditData.media.oembed.thumbnail_url
+    const thumbnail = subredditData.media!.oembed.thumbnail_url
 
     // private ---------------------------------------------------------------------------------------------------------
     const getStandardDefinitionMedia = () => thumbnail.replace(Extension.Jpg, Extension.Mp4)

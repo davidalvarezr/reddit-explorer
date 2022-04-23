@@ -1,8 +1,7 @@
 import { Endpoint } from "../constants/Endpoint"
-import { UserAgent } from "../constants/UserAgent"
 
 export const defaultConfig = {
-    userAgent: UserAgent.WindowsFirefox,
+    userAgent: "reddit-explorer npm package (by /u/davalres)",
     grantType: Endpoint.GrandType,
     matureContent: false,
 }

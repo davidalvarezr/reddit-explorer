@@ -95,7 +95,14 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
     }
 
     const getSubredditNames = async (params: GetSubredditNamesArgs): Promise<GetSubredditNamesResponse> => {
-        const response = await api.get<GetSubredditNamesResponse>("/api/search_reddit_names", { params })
+        const paramsWithConfig: GetSubredditNamesArgs = {
+            include_over_18: config.matureContent,
+            ...params,
+        }
+
+        const response = await api.get<GetSubredditNamesResponse>("/api/search_reddit_names", {
+            params: paramsWithConfig,
+        })
 
         return response.data
     }
