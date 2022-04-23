@@ -27,10 +27,12 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
 
     // Retrieving token info
     try {
-        const rawTokenAndExpiration = fs.readFileSync(filename, { encoding: "utf-8" })
-        const tokenAndExpiration = rawTokenAndExpiration.split(CR)
-        token = tokenAndExpiration[0]
-        expirationTimestampInMilliseconds = tokenAndExpiration[1] as unknown as number
+        if (fs.existsSync(filename)) {
+            const rawTokenAndExpiration = fs.readFileSync(filename, { encoding: "utf-8" })
+            const tokenAndExpiration = rawTokenAndExpiration.split(CR)
+            token = tokenAndExpiration[0]
+            expirationTimestampInMilliseconds = tokenAndExpiration[1] as unknown as number
+        }
     } catch (e) {
         console.error(e)
     }
