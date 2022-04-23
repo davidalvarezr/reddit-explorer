@@ -22,7 +22,7 @@ You have to pass your app credentials, see how to generate some:
 
 #### Initializing the client
 ```ts
-import { createRedditClient } from "reddit-explorer"
+import { createRedditClient, SortingMethod, TimeRange } from "reddit-explorer"
 
 const reddit = createRedditClient({
     clientId: "<clientId>",
@@ -100,14 +100,16 @@ reddit
 
 #### Loading next results
 
-The API can only load a max amount of 25 posts. To load the next 25 posts, you have to pass the `after` param:
+The API can only load a max amount of 25 posts. To load the next 25 posts, you have to pass the `after` param.
+You can find the value of the after in the previous request you made, in `response.after`. It contains the `name`
+(`SubredditData.name`) of the last post in the previous call.
 
 ```ts
 reddit
     .getSubreddit({
         name: "meme",
         sortMethod: SortingMethod.New,
-        after: "t3_u9osas",
+        after: "t3_u9osas", // response.after of the previous call
     })
     .then((res) => console.log("meme", res))
 ```
@@ -127,11 +129,10 @@ There are two ways to achieve that:
    })
    ```
 2. When calling the method:
-
-```
-reddit.getSubredditNames({ query: "photo", include_over_18: true })
-    .then((res) => console.log("photo", res))
-```
+    ```
+    reddit.getSubredditNames({ query: "photo", include_over_18: true })
+        .then((res) => console.log("photo", res))
+    ```
 
 ---
 

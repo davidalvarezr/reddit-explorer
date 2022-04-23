@@ -14,7 +14,9 @@ const filename = "token.txt"
 const CR = "\n"
 
 export const createRedditClient = (config: RedditClientConfiguration) => {
-    const { clientId, secret, userAgent, grantType, deviceId = uuidv4(), debug } = { ...defaultConfig, ...config }
+    const finalConfig = { ...defaultConfig, ...config }
+    const { clientId, secret, userAgent, grantType, deviceId = uuidv4(), debug } = finalConfig
+    let { matureContent } = finalConfig
 
     const api = axios.create({
         baseURL: Endpoint.BaseUrl,
@@ -81,9 +83,6 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
         return response.data
     }
 
-    /**
-     * Get the content of a subreddit
-     */
     const getSubreddit = async ({
         name,
         sortMethod,
@@ -96,7 +95,7 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
 
     const getSubredditNames = async (params: GetSubredditNamesArgs): Promise<GetSubredditNamesResponse> => {
         const paramsWithConfig: GetSubredditNamesArgs = {
-            include_over_18: config.matureContent,
+            include_over_18: matureContent,
             ...params,
         }
 
@@ -107,9 +106,16 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
         return response.data
     }
 
+    const conf = {
+        setMatureContent: (newMatureContent: boolean) => {
+            matureContent = newMatureContent
+        },
+    }
+
     return {
         getAccessToken,
         getSubreddit,
         getSubredditNames,
+        config: conf,
     }
 }
