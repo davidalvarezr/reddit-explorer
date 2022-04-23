@@ -5,7 +5,7 @@ import { RedditClientConfiguration } from "./config/RedditClientConfiguration"
 
 // Requests
 
-import { GetSubredditArgs } from "./types/api/requests/GetSubredditArgs"
+import { GetSubredditArgs } from "./types/api/requests/GetSubredditArgs/GetSubredditArgs"
 import { GetSubredditNamesArgs } from "./types/api/requests/GetSubredditNamesArgs"
 import { SortingMethod } from "./types/api/SortingMethod"
 import { TimeRange } from "./types/api/TimeRange"

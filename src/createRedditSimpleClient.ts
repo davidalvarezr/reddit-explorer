@@ -1,7 +1,7 @@
 import { createRedditClient } from "./createRedditClient"
 import { GetSubredditNamesArgs } from "./types/api/requests/GetSubredditNamesArgs"
 import { RedditClientConfiguration } from "./config/RedditClientConfiguration"
-import { SimplePost, SimpleGetSubredditArgs } from "./types/api/requests/GetSubredditArgs"
+import { SimplePost, SimpleGetSubredditArgs } from "./types/api/requests/GetSubredditArgs/GetSubredditArgs"
 import { buildLink } from "./helpers/buildLink"
 import { filterKeys } from "./helpers/filterKeys"
 import { applyLocalTimezoneOffset } from "./helpers/applyLocalTimezoneOffset"
