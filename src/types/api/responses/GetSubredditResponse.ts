@@ -38,7 +38,7 @@ type SubredditDataWithoutSubredditDetail<TGetSubredditArgs extends GetSubredditA
     thumbnail_height: number
     top_awarded_type: any
     hide_score: boolean
-    name: TGetSubredditArgs["name"]
+    name: string
     quarantine: boolean
     link_flair_text_color: string
     upvote_ratio: number

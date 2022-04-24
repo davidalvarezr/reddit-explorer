@@ -97,6 +97,23 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
         return response.data
     }
 
+    async function* getSubredditIterator<TGetSubredditArgs extends GetSubredditArgs>(
+        args: TGetSubredditArgs
+    ): AsyncIterator<GetSubredditResponse<TGetSubredditArgs>, never, void> {
+        let after: string | null = null
+
+        while (true) {
+            const res = await getSubreddit({
+                after,
+                ...args,
+            })
+
+            after = res.data.after
+
+            yield res
+        }
+    }
+
     const getSubredditNames = async (params: GetSubredditNamesArgs): Promise<GetSubredditNamesResponse> => {
         const paramsWithConfig: GetSubredditNamesArgs = {
             include_over_18: matureContent,
@@ -119,6 +136,7 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
     return {
         getAccessToken,
         getSubreddit,
+        getSubredditIterator,
         getSubredditNames,
         config: conf,
     }
