@@ -37,18 +37,18 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
         console.error(e)
     }
 
-    api.interceptors.request.use(async (conf) => {
+    api.interceptors.request.use(async (axiosRequestConfig) => {
         if (Date.now() > expirationTimestampInMilliseconds) {
             const response = await getAccessToken()
             token = response.access_token
             expirationTimestampInMilliseconds = Date.now() + response.expires_in * 1000
         }
 
-        conf.headers.common["Authorization"] = "Bearer " + token
+        axiosRequestConfig.headers.common["Authorization"] = "Bearer " + token
 
         debug?.logToken && console.log("token", token)
 
-        return conf
+        return axiosRequestConfig
     })
 
     /**
