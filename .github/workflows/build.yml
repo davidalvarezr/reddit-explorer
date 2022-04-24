@@ -17,11 +17,12 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Test and coverage
-        run: npx jest --coverage
+        env:
+          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
+          REDDIT_SECRET: ${{ secrets.REDDIT_SECRET }}
+        run: echo $REDDIT_CLIENT_ID && echo $REDDIT_SECRET npx jest --coverage
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          REDDIT_CLIENT_ID: '${{ secrets.REDDIT_CLIENT_ID }}'
-          REDDIT_SECRET: '${{ secrets.REDDIT_SECRET }}'
