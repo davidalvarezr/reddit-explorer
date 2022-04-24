@@ -1,14 +1,14 @@
 import { Kind } from "../Kind"
 import { Url } from "../../tags/Url"
 import { IFrame } from "../../tags/IFrame"
-import { GetSubredditArgs } from "../requests/GetSubredditArgs/GetSubredditArgs"
+import { GetSubredditArgs } from "../requests/GetSubredditArgs"
 
 export type GetSubredditResponse<TGetSubredditArgs extends GetSubredditArgs> = {
     kind: string
     data: {
         modash: string
         dist: number
-        children: { p; kind: Kind; data: SubredditData<TGetSubredditArgs> }[]
+        children: { kind: Kind; data: SubredditData<TGetSubredditArgs> }[]
         after: string | null
         before: string | null
     }
@@ -16,10 +16,10 @@ export type GetSubredditResponse<TGetSubredditArgs extends GetSubredditArgs> = {
 
 export type SubredditData<TGetSubredditArgs extends GetSubredditArgs = GetSubredditArgs> =
     TGetSubredditArgs["sr_detail"] extends true
-        ? BaseSubredditData<TGetSubredditArgs> & SubredditDetail
-        : BaseSubredditData<TGetSubredditArgs>
+        ? SubredditDataWithoutSubredditDetail<TGetSubredditArgs> & SubredditDataWithOnlySubredditDetail
+        : SubredditDataWithoutSubredditDetail<TGetSubredditArgs>
 
-type BaseSubredditData<TGetSubredditArgs extends GetSubredditArgs> = {
+type SubredditDataWithoutSubredditDetail<TGetSubredditArgs extends GetSubredditArgs> = {
     approved_at_utc: any
     subreddit: string
     selftext: string
@@ -234,7 +234,7 @@ type BaseSubredditData<TGetSubredditArgs extends GetSubredditArgs> = {
     is_video: boolean
 }
 
-type SubredditDetail = {
+type SubredditDataWithOnlySubredditDetail = {
     sr_detail: {
         default_set: boolean
         banner_img: string

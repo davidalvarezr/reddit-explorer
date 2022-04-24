@@ -3,7 +3,7 @@ import { MediaType } from "../../src/media_parsers/MediaType"
 
 const postContainingRedditGif = {
     approved_at_utc: null,
-    subreddit: "MasterOfAnal",
+    subreddit: "nsfw",
     selftext: "",
     author_fullname: "t2_hlrv3cfc",
     saved: false,
@@ -12,7 +12,7 @@ const postContainingRedditGif = {
     clicked: false,
     title: "Getting my tight ass used to getting fucked 🍑💦",
     link_flair_richtext: [],
-    subreddit_name_prefixed: "r/MasterOfAnal",
+    subreddit_name_prefixed: "r/nsfw",
     hidden: false,
     pwls: 0,
     link_flair_css_class: "blue",
@@ -230,7 +230,7 @@ const postContainingRedditGif = {
     mod_reports: [],
     author_patreon_flair: false,
     author_flair_text_color: null,
-    permalink: "/r/MasterOfAnal/comments/u9cmio/getting_my_tight_ass_used_to_getting_fucked/",
+    permalink: "/r/nsfw/comments/u9cmio/getting_my_tight_ass_used_to_getting_fucked/",
     parent_whitelist_status: "no_ads",
     stickied: false,
     url: "https://i.redd.it/2e5ra8ayh2v81.gif",

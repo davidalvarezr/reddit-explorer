@@ -26,18 +26,18 @@ test("Should get subreddit", async () => {
 })
 
 test("Should retrieve safe names", async () => {
-    const res = await client.getSubredditNames({ query: "anal" })
-    expect(res.names).not.toContain("anal")
+    const res = await client.getSubredditNames({ query: "nsfw" })
+    expect(res.names).not.toContain("nsfw")
 })
 
 test("Should retrieve adult names (change config)", async () => {
     client.config.setMatureContent(true)
-    const res = await client.getSubredditNames({ query: "anal" })
-    expect(res.names).toContain("anal")
+    const res = await client.getSubredditNames({ query: "nsfw" })
+    expect(res.names).toContain("nsfw")
 })
 
 test("Should retrieve adult names (init config)", async () => {
     client = createRedditClient({ clientId: secrets.clientId, secret: secrets.secret, matureContent: true })
-    const res = await client.getSubredditNames({ query: "anal" })
-    expect(res.names).toContain("anal")
+    const res = await client.getSubredditNames({ query: "nsfw" })
+    expect(res.names).toContain("nsfw")
 })
