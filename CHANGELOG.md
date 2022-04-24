@@ -1,8 +1,12 @@
 # Changelog
 
-### 1.1.1 - 2022-04-24
+## 1.2.0 - 2022-04-25
+#### new features
+- filters: filter the GetSubredditResponse according to an array of criteria
+
 #### docs
-- updated README, npm keywords
+- updated README, added badges
+- added npm keywords
 
 ## 1.1.0 - 2022-04-24
 #### new features

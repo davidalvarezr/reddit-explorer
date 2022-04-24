@@ -1,4 +1,4 @@
-import { createRedditClient } from "./createRedditClient"
+import { createRedditClient } from "./client/createRedditClient"
 import { GetSubredditNamesArgs } from "./types/api/requests/GetSubredditNamesArgs"
 import { RedditClientConfiguration } from "./config/RedditClientConfiguration"
 import { SimplePost, SimpleGetSubredditArgs } from "./types/api/requests/GetSubredditArgs"

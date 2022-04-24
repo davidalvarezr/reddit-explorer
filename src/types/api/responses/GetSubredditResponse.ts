@@ -3,7 +3,7 @@ import { Url } from "../../tags/Url"
 import { IFrame } from "../../tags/IFrame"
 import { GetSubredditArgs } from "../requests/GetSubredditArgs"
 
-export type GetSubredditResponse<TGetSubredditArgs extends GetSubredditArgs> = {
+export type GetSubredditResponse<TGetSubredditArgs extends GetSubredditArgs = GetSubredditArgs> = {
     kind: string
     data: {
         modash: string
