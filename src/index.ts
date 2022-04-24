@@ -1,6 +1,6 @@
 // Main & config
 
-import { createRedditClient } from "./createRedditClient"
+import { createRedditClient } from "./client/createRedditClient"
 import { RedditClientConfiguration } from "./config/RedditClientConfiguration"
 
 // Requests
@@ -14,6 +14,7 @@ import { TimeRange } from "./types/api/TimeRange"
 
 import { GetSubredditResponse, SubredditData } from "./types/api/responses/GetSubredditResponse"
 import { GetSubredditNamesResponse } from "./types/api/responses/GetSubredditNamesResponse"
+import { PostFilter } from "./post_filter/PostFilter"
 
 export {
     // Main & config
@@ -28,4 +29,5 @@ export {
     GetSubredditResponse,
     SubredditData,
     GetSubredditNamesResponse,
+    PostFilter,
 }
