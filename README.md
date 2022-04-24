@@ -1,5 +1,5 @@
 # reddit-explorer
-The current version is **1.1.0**
+The current version is **1.1.1**
 
 To see what has been done on each version, you can consult the 
 [CHANGELOG](https://github.com/davidalvarezr/reddit-explorer/blob/master/CHANGELOG.md).
@@ -23,7 +23,7 @@ You have to pass your app credentials, see how to generate some:
 ## API
 For the moment **reddit-explorer** has 3 features:
 1. Authentication with clientId & secret
-2. Getting the content of a subreddit
+2. Getting the content of a subreddit (+ automatic pagination handling)
 3. Getting similar subreddit names of a `string`
 
 I'm actively working on other features that are coming soon :) 
@@ -141,7 +141,7 @@ const memeResults5To9 = await memeSubredditIterator.next()
 console.log("memeResults0To4", memeResults0To4.value)
 console.log("memeResults5To9", memeResults5To9.value)
 
-// memeResults0To5 {
+// memeResults0To4 {
 //     kind: 'Listing',
 //         data: {
 //         after: 't3_uaslor',
@@ -152,7 +152,7 @@ console.log("memeResults5To9", memeResults5To9.value)
 //             before: null
 //     }
 // }
-// memeResults5To10 {
+// memeResults5To9 {
 //     kind: 'Listing',
 //         data: {
 //         after: 't3_uas9sy',
