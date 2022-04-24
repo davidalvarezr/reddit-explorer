@@ -20,7 +20,7 @@ jobs:
         env:
           REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
           REDDIT_SECRET: ${{ secrets.REDDIT_SECRET }}
-        run: echo $REDDIT_CLIENT_ID && echo $REDDIT_SECRET npx jest --coverage
+        run: echo $REDDIT_CLIENT_ID && echo $REDDIT_SECRET && npx jest --coverage
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         env:
