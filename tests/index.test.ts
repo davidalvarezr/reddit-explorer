@@ -1,4 +1,4 @@
-import { createRedditClient } from "../src"
+import { createRedditClient, SortingMethod } from "../src"
 import { secrets } from "../src/secrets"
 import { RedditClient } from "../src/types/RedditClient"
 
@@ -15,19 +15,29 @@ test("Should retrieve access token", async () => {
     )
 })
 
+test("Should get subreddit", async () => {
+    const res = await client.getSubreddit({
+        sortMethod: SortingMethod.Top,
+        name: "news",
+        sr_detail: true,
+    })
+
+    res.data.children[0].data.name
+})
+
 test("Should retrieve safe names", async () => {
-    const res = await client.getSubredditNames({ query: "anal" })
-    expect(res.names).not.toContain("anal")
+    const res = await client.getSubredditNames({ query: "nsfw" })
+    expect(res.names).not.toContain("nsfw")
 })
 
 test("Should retrieve adult names (change config)", async () => {
     client.config.setMatureContent(true)
-    const res = await client.getSubredditNames({ query: "anal" })
-    expect(res.names).toContain("anal")
+    const res = await client.getSubredditNames({ query: "nsfw" })
+    expect(res.names).toContain("nsfw")
 })
 
 test("Should retrieve adult names (init config)", async () => {
     client = createRedditClient({ clientId: secrets.clientId, secret: secrets.secret, matureContent: true })
-    const res = await client.getSubredditNames({ query: "anal" })
-    expect(res.names).toContain("anal")
+    const res = await client.getSubredditNames({ query: "nsfw" })
+    expect(res.names).toContain("nsfw")
 })

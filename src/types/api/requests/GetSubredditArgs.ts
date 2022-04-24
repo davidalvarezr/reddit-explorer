@@ -8,7 +8,7 @@ import { Url } from "../../tags/Url"
 
 type Base = Listing & {
     name: string // the name of the subreddit
-    sortMethod?: SortingMethod // one of hot, new, random, controversial, random, rising or top
+    sortMethod: SortingMethod // one of hot, new, random, controversial, random, rising or top
 }
 
 type Locale =

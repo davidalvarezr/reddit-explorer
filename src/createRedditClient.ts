@@ -85,12 +85,14 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
         return response.data
     }
 
-    const getSubreddit = async ({
-        name,
-        sortMethod,
-        ...restParams
-    }: GetSubredditArgs): Promise<GetSubredditResponse> => {
-        const response = await api.get<GetSubredditResponse>(`/r/${name}/${sortMethod}`, { params: restParams })
+    const getSubreddit = async <TGetSubredditArgs extends GetSubredditArgs>(
+        args: TGetSubredditArgs
+    ): Promise<GetSubredditResponse<TGetSubredditArgs>> => {
+        const { name, sortMethod, ...restParams } = args
+
+        const response = await api.get<GetSubredditResponse<TGetSubredditArgs>>(`/r/${name}/${sortMethod}`, {
+            params: restParams,
+        })
 
         return response.data
     }

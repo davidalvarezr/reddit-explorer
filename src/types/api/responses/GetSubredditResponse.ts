@@ -1,22 +1,25 @@
 import { Kind } from "../Kind"
 import { Url } from "../../tags/Url"
 import { IFrame } from "../../tags/IFrame"
+import { GetSubredditArgs } from "../requests/GetSubredditArgs"
 
-export type GetSubredditResponse = {
+export type GetSubredditResponse<TGetSubredditArgs extends GetSubredditArgs> = {
     kind: string
     data: {
         modash: string
         dist: number
-        children: {
-            kind: Kind
-            data: SubredditData
-        }[]
+        children: { kind: Kind; data: SubredditData<TGetSubredditArgs> }[]
         after: string | null
         before: string | null
     }
 }
 
-export type SubredditData = {
+export type SubredditData<TGetSubredditArgs extends GetSubredditArgs = GetSubredditArgs> =
+    TGetSubredditArgs["sr_detail"] extends true
+        ? SubredditDataWithoutSubredditDetail<TGetSubredditArgs> & SubredditDataWithOnlySubredditDetail
+        : SubredditDataWithoutSubredditDetail<TGetSubredditArgs>
+
+type SubredditDataWithoutSubredditDetail<TGetSubredditArgs extends GetSubredditArgs> = {
     approved_at_utc: any
     subreddit: string
     selftext: string
@@ -35,7 +38,7 @@ export type SubredditData = {
     thumbnail_height: number
     top_awarded_type: any
     hide_score: boolean
-    name: string
+    name: TGetSubredditArgs["name"]
     quarantine: boolean
     link_flair_text_color: string
     upvote_ratio: number
@@ -98,7 +101,7 @@ export type SubredditData = {
     content_categories: any
     is_self: boolean
     mod_note: any
-    crosspost_parent_list?: SubredditData[]
+    crosspost_parent_list?: SubredditData<TGetSubredditArgs>[]
     created: number
     link_flair_type: string
     wls: number
@@ -203,7 +206,6 @@ export type SubredditData = {
     author_patreon_flair: boolean
     crosspost_parent?: string
     author_flair_text_color: null
-    // todo: sr_detail
     permalink: string
     parent_whitelist_status: string
     stickied: boolean
@@ -230,4 +232,49 @@ export type SubredditData = {
         }
     }
     is_video: boolean
+}
+
+type SubredditDataWithOnlySubredditDetail = {
+    sr_detail: {
+        default_set: boolean
+        banner_img: string
+        restrict_posting: boolean
+        user_is_banned?: any
+        free_form_reports: boolean
+        community_icon?: any
+        show_media: boolean
+        description: string
+        user_is_muted?: any
+        display_name: string
+        header_img: string
+        title: string
+        previous_names: any[]
+        user_is_moderator?: any
+        over_18: boolean
+        icon_size: number[]
+        primary_color: string
+        icon_img: string
+        icon_color: string
+        submit_link_label: string
+        header_size: number[]
+        restrict_commenting: boolean
+        subscribers: number
+        submit_text_label: string
+        link_flair_position: string
+        display_name_prefixed: string
+        key_color: string
+        name: string
+        created: number
+        url: string
+        quarantine: boolean
+        created_utc: number
+        banner_size: number[]
+        user_is_contributor?: any
+        accept_followers: boolean
+        public_description: string
+        link_flair_enabled: boolean
+        disable_contributor_requests: boolean
+        subreddit_type: string
+        user_is_subscriber?: any
+    }
 }
