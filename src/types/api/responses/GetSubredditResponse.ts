@@ -8,10 +8,7 @@ export type GetSubredditResponse<TGetSubredditArgs extends GetSubredditArgs> = {
     data: {
         modash: string
         dist: number
-        children: {p
-            kind: Kind
-            data: SubredditData<TGetSubredditArgs>
-        }[]
+        children: { p; kind: Kind; data: SubredditData<TGetSubredditArgs> }[]
         after: string | null
         before: string | null
     }
