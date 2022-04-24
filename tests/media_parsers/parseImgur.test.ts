@@ -4,7 +4,7 @@ import { MediaType } from "../../src/media_parsers/MediaType"
 
 const postContainingImgurMedia = {
     approved_at_utc: null,
-    subreddit: "MasterOfAnal",
+    subreddit: "nsfw",
     selftext: "",
     author_fullname: "t2_dmjefaxp",
     saved: false,
@@ -13,7 +13,7 @@ const postContainingImgurMedia = {
     clicked: false,
     title: "Enjoy the view :)",
     link_flair_richtext: [],
-    subreddit_name_prefixed: "r/MasterOfAnal",
+    subreddit_name_prefixed: "r/nsfw",
     hidden: false,
     pwls: 0,
     link_flair_css_class: null,
@@ -212,7 +212,7 @@ const postContainingImgurMedia = {
     mod_reports: [],
     author_patreon_flair: false,
     author_flair_text_color: null,
-    permalink: "/r/MasterOfAnal/comments/u9eqnv/enjoy_the_view/",
+    permalink: "/r/nsfw/comments/u9eqnv/enjoy_the_view/",
     parent_whitelist_status: "no_ads",
     stickied: false,
     url: "https://i.imgur.com/LkGThfh.jpg",

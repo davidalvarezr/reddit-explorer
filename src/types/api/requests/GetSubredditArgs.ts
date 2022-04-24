@@ -1,8 +1,8 @@
-import { Listing } from "../Listing"
-import { SortingMethod } from "../../SortingMethod"
-import { TimeRange } from "../../TimeRange"
-import { Kind } from "../../Kind"
-import { Url } from "../../../tags/Url"
+import { Listing } from "./Listing"
+import { SortingMethod } from "../SortingMethod"
+import { TimeRange } from "../TimeRange"
+import { Kind } from "../Kind"
+import { Url } from "../../tags/Url"
 
 // todo: create locales enum for "g"
 

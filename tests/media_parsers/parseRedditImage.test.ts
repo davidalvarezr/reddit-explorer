@@ -3,7 +3,7 @@ import { MediaType } from "../../src/media_parsers/MediaType"
 
 const postContainingRedditImage = {
     approved_at_utc: null,
-    subreddit: "MasterOfAnal",
+    subreddit: "nsfw",
     selftext: "",
     author_fullname: "t2_4dh6y8q3",
     saved: false,
@@ -12,7 +12,7 @@ const postContainingRedditImage = {
     clicked: false,
     title: "(F) Do you think your fist would fit?",
     link_flair_richtext: [],
-    subreddit_name_prefixed: "r/MasterOfAnal",
+    subreddit_name_prefixed: "r/nsfw",
     hidden: false,
     pwls: 0,
     link_flair_css_class: "green",
@@ -227,7 +227,7 @@ const postContainingRedditImage = {
     mod_reports: [],
     author_patreon_flair: false,
     author_flair_text_color: null,
-    permalink: "/r/MasterOfAnal/comments/u9efrg/f_do_you_think_your_fist_would_fit/",
+    permalink: "/r/nsfw/comments/u9efrg/f_do_you_think_your_fist_would_fit/",
     parent_whitelist_status: "no_ads",
     stickied: false,
     url: "https://i.redd.it/m7kc8akwy2v81.jpg",

@@ -6,7 +6,7 @@ import { GetSubredditNamesArgs } from "./types/api/requests/GetSubredditNamesArg
 import { GetSubredditNamesResponse } from "./types/api/responses/GetSubredditNamesResponse"
 import { RedditClientConfiguration } from "./config/RedditClientConfiguration"
 import { AccessTokenResponse } from "./types/api/responses/AccessTokenResponse"
-import { GetSubredditArgs } from "./types/api/requests/GetSubredditArgs/GetSubredditArgs"
+import { GetSubredditArgs } from "./types/api/requests/GetSubredditArgs"
 import { GetSubredditResponse } from "./types/api/responses/GetSubredditResponse"
 import * as fs from "fs"
 
