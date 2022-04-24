@@ -1,5 +1,5 @@
 # reddit-explorer
-The current version is **1.0.2**
+The current version is **1.1.0**
 
 To see what has been done on each version, you can consult the 
 [CHANGELOG](https://github.com/davidalvarezr/reddit-explorer/blob/master/CHANGELOG.md).
@@ -135,11 +135,11 @@ const memeSubredditIterator = reddit.getSubredditIterator({
     limit: 5,
 })
 
-const memeResults0To5 = await memeSubredditIterator.next()
-const memeResults5To10 = await memeSubredditIterator.next()
+const memeResults0To4 = await memeSubredditIterator.next()
+const memeResults5To9 = await memeSubredditIterator.next()
 
-console.log("memeResults0To5", memeResults0To5.value)
-console.log("memeResults5To10", memeResults5To10.value)
+console.log("memeResults0To4", memeResults0To4.value)
+console.log("memeResults5To9", memeResults5To9.value)
 
 // memeResults0To5 {
 //     kind: 'Listing',
