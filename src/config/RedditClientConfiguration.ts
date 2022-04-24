@@ -1,3 +1,5 @@
+import { PostFilter } from "../post_filter/PostFilter"
+
 export type RedditClientConfiguration = {
     clientId: string
     secret: string
@@ -8,4 +10,5 @@ export type RedditClientConfiguration = {
         logToken: boolean
     }
     matureContent?: boolean
+    postFilters?: PostFilter[] // the logical operator between each condition is a AND (&&)
 }

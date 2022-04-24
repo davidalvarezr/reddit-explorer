@@ -39,14 +39,15 @@ You have to pass your app credentials, see how to generate some:
 ## API
 For the moment **reddit-explorer** has 3 features:
 1. Authentication with clientId & secret
-2. Getting the content of a subreddit (+ automatic pagination handling)
-3. Getting similar subreddit names of a `string`
+1. Getting similar subreddit names of a `string`
+1. Getting the content of a subreddit (+ automatic pagination handling)
+1. Easily filter the posts of a response   
 
 I'm actively working on other features that are coming soon :) 
 
 ### Initializing the client
 ```ts
-import { createRedditClient, SortingMethod, TimeRange } from "reddit-explorer"
+import { createRedditClient, SortingMethod, TimeRange, PostFilter } from "reddit-explorer"
 
 const reddit = createRedditClient({
     clientId: "<clientId>",
@@ -123,6 +124,22 @@ reddit
     })
     .then((res) => console.log("meme", res))
 ```
+
+#### Filter the results of a response
+If you want to keep only specific posts in the response, you can use `postFilters` when creating the client. This
+attribute accepts an array of functions, each one taking a `SubredditData` into parameter and returning a `boolean`:
+```ts
+const moreThan100Comments: PostFilter = (subredditData) => subredditData.num_comments > 100
+
+const moreThan2Crossposts: PostFilter = (subredditData) => subredditData.num_crossposts > 2
+
+const clientShowingOnlyPopularPosts = createRedditClient({
+    clientId: secrets.clientId,
+    secret: secrets.secret,
+    postFilters: [moreThan100Comments, moreThan2Crossposts],
+})
+```
+
 
 ### Loading next results
 

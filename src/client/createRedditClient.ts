@@ -1,21 +1,22 @@
-import { defaultConfig } from "./config/defaultConfig"
-import { Endpoint } from "./constants/Endpoint"
-import { uuidv4 } from "./helpers/uuidv4"
+import { defaultConfig } from "../config/defaultConfig"
+import { Endpoint } from "../constants/Endpoint"
+import { uuidv4 } from "../helpers/uuidv4"
 import axios from "axios"
-import { GetSubredditNamesArgs } from "./types/api/requests/GetSubredditNamesArgs"
-import { GetSubredditNamesResponse } from "./types/api/responses/GetSubredditNamesResponse"
-import { RedditClientConfiguration } from "./config/RedditClientConfiguration"
-import { AccessTokenResponse } from "./types/api/responses/AccessTokenResponse"
-import { GetSubredditArgs } from "./types/api/requests/GetSubredditArgs"
-import { GetSubredditResponse } from "./types/api/responses/GetSubredditResponse"
+import { GetSubredditNamesArgs } from "../types/api/requests/GetSubredditNamesArgs"
+import { GetSubredditNamesResponse } from "../types/api/responses/GetSubredditNamesResponse"
+import { RedditClientConfiguration } from "../config/RedditClientConfiguration"
+import { AccessTokenResponse } from "../types/api/responses/AccessTokenResponse"
+import { GetSubredditArgs } from "../types/api/requests/GetSubredditArgs"
+import { GetSubredditResponse } from "../types/api/responses/GetSubredditResponse"
 import * as fs from "fs"
+import { filterPosts } from "./filterPosts"
 
 const filename = "token.txt"
 const CR = "\n"
 
 export const createRedditClient = (config: RedditClientConfiguration) => {
     const finalConfig = { ...defaultConfig, ...config }
-    const { clientId, secret, userAgent, grantType, deviceId = uuidv4(), debug } = finalConfig
+    const { clientId, secret, userAgent, grantType, deviceId = uuidv4(), debug, postFilters } = finalConfig
     let { matureContent } = finalConfig
 
     const api = axios.create({
@@ -94,7 +95,7 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
             params: restParams,
         })
 
-        return response.data
+        return filterPosts(response.data, postFilters)
     }
 
     async function* getSubredditIterator<TGetSubredditArgs extends GetSubredditArgs>(
