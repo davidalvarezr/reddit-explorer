@@ -22,21 +22,27 @@
     "url": "https://github.com/davidalvarezr/reddit-explorer/issues",
     "email": "devdav@pm.me"
   },
-  "keywords": ["reddit", "reddit client", "reddit api", "reddit wrapper", "typescript"],
+  "keywords": [
+    "reddit",
+    "reddit client",
+    "reddit api",
+    "reddit wrapper",
+    "typescript"
+  ],
   "author": "David Alvarez Restrepo <devdav@pm.me> (https://github.com/davidalvarezr)",
   "license": "MIT",
   "directories": {
     "test": "tests"
   },
   "dependencies": {
-    "axios": "^0.21.1",
-    "tsc": "^2.0.3",
-    "typescript": "^4.3.4"
+    "axios": "^0.21.4",
+    "tsc": "^2.0.4",
+    "typescript": "^4.6.3"
   },
   "devDependencies": {
     "@types/jest": "^27.4.1",
     "jest": "^27.5.1",
-    "prettier": "^2.3.1",
+    "prettier": "^2.6.2",
     "ts-jest": "^27.1.4"
   }
 }
