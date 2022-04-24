@@ -1,7 +1,8 @@
 # reddit-explorer
-The current version is **1.0.2**
+The current version is **1.1.0**
 
-To see what has been done on each version, you can consult the [CHANGELOG](https://github.com/davidalvarezr/reddit-explorer/blob/master/CHANGELOG.md).
+To see what has been done on each version, you can consult the 
+[CHANGELOG](https://github.com/davidalvarezr/reddit-explorer/blob/master/CHANGELOG.md).
 
 ## Installation
 ### Command line
@@ -59,9 +60,11 @@ reddit.getSubredditNames({ query: "photo" })
 ```
 
 ### Getting the content of a subreddit
-You have to pass a name and a `SortingMethod`. Sorting method can be: `Hot`, `New`, `Random`, `Rising`, `Top` or `Controversial`.
+You have to pass a name and a `SortingMethod`. Sorting method can be: `Hot`, `New`, `Random`, `Rising`, `Top` or
+`Controversial`.
 
-If the sorting method is `Top` or `Controversial`, you can also pass a `TimeRange`. Time range can be: `Hour`, `Day`, `Week`, `Month`, `Year`, `All`.
+If the sorting method is `Top` or `Controversial`, you can also pass a `TimeRange`. Time range can be: `Hour`, `Day`,
+`Week`, `Month`, `Year`, `All`.
 
 The package offers the type `SubredditData` which is the type of all the `[Object]` below (see at the end of the readme).
 ```ts
@@ -108,8 +111,8 @@ reddit
 ### Loading next results
 
 The API can only load a max amount of 25 posts. To load the next 25 posts, you have to pass the `after` param.
-You can find the value of the after in the previous request you made, in `response.after`. It contains the `name`
-(`SubredditData.name`) of the last post in the previous call.
+You can find the value of the `after` in the previous response of the request you made, in `response.after`. It contains
+the `name` (`SubredditData.name`) of the last post in the previous call.
 
 ```ts
 reddit
@@ -119,6 +122,47 @@ reddit
         after: "t3_u9osas", // response.after of the previous call
     })
     .then((res) => console.log("meme", res))
+```
+
+#### Using iterators
+If you do not want to memorize the `after` attribute of the last response yourself, you can let the package handle it for
+you, using `getSubredditIterator`:
+
+```ts
+const memeSubredditIterator = reddit.getSubredditIterator({
+    name: "meme",
+    sortMethod: SortingMethod.New,
+    limit: 5,
+})
+
+const memeResults0To4 = await memeSubredditIterator.next()
+const memeResults5To9 = await memeSubredditIterator.next()
+
+console.log("memeResults0To4", memeResults0To4.value)
+console.log("memeResults5To9", memeResults5To9.value)
+
+// memeResults0To5 {
+//     kind: 'Listing',
+//         data: {
+//         after: 't3_uaslor',
+//             dist: 5,
+//             modhash: '',
+//             geo_filter: '',
+//             children: [ [Object], [Object], [Object], [Object], [Object] ],
+//             before: null
+//     }
+// }
+// memeResults5To10 {
+//     kind: 'Listing',
+//         data: {
+//         after: 't3_uas9sy',
+//             dist: 5,
+//             modhash: '',
+//             geo_filter: '',
+//             children: [ [Object], [Object], [Object], [Object], [Object] ],
+//             before: null
+//     }
+// }
 ```
 
 ### Include adult subreddit names

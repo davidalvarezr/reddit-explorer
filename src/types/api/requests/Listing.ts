@@ -1,6 +1,6 @@
 export type Listing =
     | (ListingWithoutBeforeNorAfter & {
-          after?: string // these indicate the fullname of an item in the listing to use as the anchor point of the slice
+          after?: string | null // these indicate the fullname of an item in the listing to use as the anchor point of the slice
       })
     | (ListingWithoutBeforeNorAfter & {
           before?: string // these indicate the fullname of an item in the listing to use as the anchor point of the slice
