@@ -1,14 +1,15 @@
-# Getting Started
+# reddit-explorer
+The current version is **1.0.2**
+
+To see what has been done on each version, you can consult the [CHANGELOG](https://github.com/davidalvarezr/reddit-explorer/blob/master/CHANGELOG.md).
 
 ## Installation
-
+### Command line
 ```
 npm install reddit-explorer
 ```
 
-## Usage
-
-### Create a dev application on Reddit
+### Create a dev application on Reddit (if you do not have already one)
 
 You have to pass your app credentials, see how to generate some:
 
@@ -18,9 +19,15 @@ You have to pass your app credentials, see how to generate some:
 
    ![credentials](./credentials.png)
 
-### API
+## API
+For the moment **reddit-explorer** has 3 features:
+1. Authentication with clientId & secret
+2. Getting the content of a subreddit
+3. Getting similar subreddit names of a `string`
 
-#### Initializing the client
+I'm actively working on other features that are coming soon :) 
+
+### Initializing the client
 ```ts
 import { createRedditClient, SortingMethod, TimeRange } from "reddit-explorer"
 
@@ -30,7 +37,7 @@ const reddit = createRedditClient({
 })
 ```
 
-#### Getting subreddit names
+### Getting subreddit names
 ```ts
 reddit.getSubredditNames({ query: "photo" })
     .then((res) => console.log("photo", res))
@@ -51,7 +58,7 @@ reddit.getSubredditNames({ query: "photo" })
 // }
 ```
 
-#### Getting the content of a subreddit
+### Getting the content of a subreddit
 You have to pass a name and a `SortingMethod`. Sorting method can be: `Hot`, `New`, `Random`, `Rising`, `Top` or `Controversial`.
 
 If the sorting method is `Top` or `Controversial`, you can also pass a `TimeRange`. Time range can be: `Hour`, `Day`, `Week`, `Month`, `Year`, `All`.
@@ -98,7 +105,7 @@ reddit
     .then((res) => console.log("meme", res))
 ```
 
-#### Loading next results
+### Loading next results
 
 The API can only load a max amount of 25 posts. To load the next 25 posts, you have to pass the `after` param.
 You can find the value of the after in the previous request you made, in `response.after`. It contains the `name`
@@ -114,29 +121,33 @@ reddit
     .then((res) => console.log("meme", res))
 ```
 
-#### Include adult subreddit names
+### Include adult subreddit names
 
-There are two ways to achieve that:
+There are three ways to achieve that:
 
 1. At the initialization of the client:
-   ```ts
-   import { createRedditClient } from "reddit-explorer"
+    ```ts
+    import { createRedditClient } from "reddit-explorer"
    
-   const reddit = createRedditClient({
+    const reddit = createRedditClient({
        clientId: "<clientId>",
        secret: "<secret>",
        matureContent: true,
-   })
-   ```
+    })
+    ```
 2. When calling the method:
     ```
     reddit.getSubredditNames({ query: "photo", include_over_18: true })
         .then((res) => console.log("photo", res))
     ```
+3. After the initialization of the client
+    ```
+    reddit.config.setMatureContent(true)
+    ```
 
 ---
 
-#### `SubredditData` type
+### `SubredditData` type
 This type offers the possibility to handle the response more easily (`response.children[0]`):
 
 ```ts
@@ -327,7 +338,6 @@ export type SubredditData = {
     author_patreon_flair: boolean
     crosspost_parent?: string
     author_flair_text_color: null
-    // todo: sr_detail
     permalink: string
     parent_whitelist_status: string
     stickied: boolean
@@ -354,10 +364,52 @@ export type SubredditData = {
         }
     }
     is_video: boolean
+    sr_detail: {
+        default_set: boolean
+        banner_img: string
+        restrict_posting: boolean
+        user_is_banned?: any
+        free_form_reports: boolean
+        community_icon?: any
+        show_media: boolean
+        description: string
+        user_is_muted?: any
+        display_name: string
+        header_img: string
+        title: string
+        previous_names: any[]
+        user_is_moderator?: any
+        over_18: boolean
+        icon_size: number[]
+        primary_color: string
+        icon_img: string
+        icon_color: string
+        submit_link_label: string
+        header_size: number[]
+        restrict_commenting: boolean
+        subscribers: number
+        submit_text_label: string
+        link_flair_position: string
+        display_name_prefixed: string
+        key_color: string
+        name: string
+        created: number
+        url: string
+        quarantine: boolean
+        created_utc: number
+        banner_size: number[]
+        user_is_contributor?: any
+        accept_followers: boolean
+        public_description: string
+        link_flair_enabled: boolean
+        disable_contributor_requests: boolean
+        subreddit_type: string
+        user_is_subscriber?: any
+    }
 }
 ```
 
-#### Sources
+### Sources
 Here you'll find the official documentation of the reddit official endpoints that this package uses:
 
 - Search reddit names: https://www.reddit.com/dev/api/#GET_api_search_reddit_names
