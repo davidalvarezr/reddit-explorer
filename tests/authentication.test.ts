@@ -1,6 +1,6 @@
 import { RedditClient } from "../src/types/RedditClient"
 import { createRedditClient } from "../src"
-import { secrets } from "../src/secrets"
+import { secrets } from "../src/config/secrets"
 
 let client: RedditClient
 

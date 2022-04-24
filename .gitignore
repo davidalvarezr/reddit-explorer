@@ -3,3 +3,5 @@
 /.idea/
 /token.txt
 /coverage/
+/.env
+/src/main.ts

@@ -11,7 +11,6 @@
     "build": "tsc",
     "start": "yarn prepare && node dist/main.js",
     "prepare": "yarn build",
-    "prepublish": "tsc",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write"
   },
   "repository": {
@@ -36,7 +35,6 @@
   },
   "dependencies": {
     "axios": "^0.21.4",
-    "tsc": "^2.0.4",
     "typescript": "^4.6.3"
   },
   "devDependencies": {
