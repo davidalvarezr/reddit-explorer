@@ -1,7 +1,3 @@
-import { config } from "dotenv"
-
-config()
-
 // This can be used in Postman as "Basic Auth":
 // clientId --> Username
 // secret   --> Password
