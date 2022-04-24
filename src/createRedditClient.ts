@@ -37,18 +37,18 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
         console.error(e)
     }
 
-    api.interceptors.request.use(async (config) => {
+    api.interceptors.request.use(async (conf) => {
         if (Date.now() > expirationTimestampInMilliseconds) {
             const response = await getAccessToken()
             token = response.access_token
             expirationTimestampInMilliseconds = Date.now() + response.expires_in * 1000
         }
 
-        config.headers.common["Authorization"] = "Bearer " + token
+        conf.headers.common["Authorization"] = "Bearer " + token
 
         debug?.logToken && console.log("token", token)
 
-        return config
+        return conf
     })
 
     /**

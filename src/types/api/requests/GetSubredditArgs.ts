@@ -4,8 +4,6 @@ import { TimeRange } from "../TimeRange"
 import { Kind } from "../Kind"
 import { Url } from "../../tags/Url"
 
-// todo: create locales enum for "g"
-
 type Base = Listing & {
     name: string // the name of the subreddit
     sortMethod: SortingMethod // one of hot, new, random, controversial, random, rising or top
