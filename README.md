@@ -15,8 +15,6 @@
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
 
 # reddit-explorer
-The current version is **1.1.1**
-
 To see what has been done on each version, you can consult the 
 [CHANGELOG](https://github.com/davidalvarezr/reddit-explorer/blob/master/CHANGELOG.md).
 
@@ -55,6 +53,8 @@ const reddit = createRedditClient({
 })
 ```
 
+---
+
 ### Getting subreddit names
 ```ts
 reddit.getSubredditNames({ query: "photo" })
@@ -75,6 +75,32 @@ reddit.getSubredditNames({ query: "photo" })
 //    ]
 // }
 ```
+
+### Include adult subreddit names
+
+There are three ways to achieve that:
+
+1. At the initialization of the client:
+    ```ts
+    import { createRedditClient } from "reddit-explorer"
+   
+    const reddit = createRedditClient({
+       clientId: "<clientId>",
+       secret: "<secret>",
+       matureContent: true,
+    })
+    ```
+2. When calling the method:
+    ```
+    reddit.getSubredditNames({ query: "photo", include_over_18: true })
+        .then((res) => console.log("photo", res))
+    ```
+3. After the initialization of the client
+    ```
+    reddit.config.setMatureContent(true)
+    ```
+
+---
 
 ### Getting the content of a subreddit
 You have to pass a name and a `SortingMethod`. Sorting method can be: `Hot`, `New`, `Random`, `Rising`, `Top` or
@@ -198,29 +224,15 @@ console.log("memeResults5To9", memeResults5To9.value)
 // }
 ```
 
-### Include adult subreddit names
+#### Getting the content of multiple subreddits
+Instead of passing a `string` to the name argument, you can pass a `string[]` to it:
 
-There are three ways to achieve that:
-
-1. At the initialization of the client:
-    ```ts
-    import { createRedditClient } from "reddit-explorer"
-   
-    const reddit = createRedditClient({
-       clientId: "<clientId>",
-       secret: "<secret>",
-       matureContent: true,
-    })
-    ```
-2. When calling the method:
-    ```
-    reddit.getSubredditNames({ query: "photo", include_over_18: true })
-        .then((res) => console.log("photo", res))
-    ```
-3. After the initialization of the client
-    ```
-    reddit.config.setMatureContent(true)
-    ```
+```ts
+const res = await client.getSubreddit({
+    sortMethod: SortingMethod.Top,
+    name: ["news", "meme"],
+})
+```
 
 ---
 
