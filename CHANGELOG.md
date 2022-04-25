@@ -3,7 +3,6 @@
 ## 1.3.0 - 2022-04-26
 #### new features
 - search in multiple subreddits
-- TODO: post pickers: pick only some attributes of each posts 
 
 #### small improvements
 - added filters which can directly be used:

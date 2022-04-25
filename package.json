@@ -26,6 +26,9 @@
     "reddit client",
     "reddit api",
     "reddit wrapper",
+    "subreddit",
+    "search",
+    "parser",
     "typescript"
   ],
   "author": "David Alvarez Restrepo <devdav@pm.me> (https://github.com/davidalvarezr)",
