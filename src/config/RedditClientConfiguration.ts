@@ -1,4 +1,4 @@
-import { PostFilter } from "../post_filter/PostFilter"
+import { PostFilter } from "../post_filters/PostFilter"
 
 export type RedditClientConfiguration = {
     clientId: string

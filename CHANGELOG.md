@@ -1,8 +1,22 @@
 # Changelog
 
+## 1.3.0 - 2022-04-26
+#### new features
+- search in multiple subreddits
+
+#### small improvements
+- added filters which can directly be used:
+    - hasNComments
+    - has[MoreThan][LessThan]NComments
+    - has[MoreOrSameThan][LessOrSameThan]NComments
+    - hasMoreThanNCrossposts
+    - hasMoreThanNUpvoteRatio
+    - isMatureContent
+    - isNotMatureContent
+
 ## 1.2.0 - 2022-04-25
 #### new features
-- filters: filter the GetSubredditResponse according to an array of criteria
+- post filters: filter the GetSubredditResponse according to an array of criteria
 
 #### docs
 - updated README, added badges

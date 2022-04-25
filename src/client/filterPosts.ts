@@ -1,10 +1,11 @@
 import { GetSubredditResponse } from "../types/api/responses/GetSubredditResponse"
-import { PostFilter } from "../post_filter/PostFilter"
+import { PostFilter } from "../post_filters/PostFilter"
+import { GetSubredditArgs } from "../types/api/requests/GetSubredditArgs"
 
-export const filterPosts = (
-    getSubredditResponse: GetSubredditResponse,
+export const filterPosts = <TGetSubredditArgs extends GetSubredditArgs>(
+    getSubredditResponse: GetSubredditResponse<TGetSubredditArgs>,
     postFilters: PostFilter[] | undefined
-): GetSubredditResponse => {
+): GetSubredditResponse<TGetSubredditArgs> => {
     if (!postFilters) {
         return getSubredditResponse
     }

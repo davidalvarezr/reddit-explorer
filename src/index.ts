@@ -14,7 +14,24 @@ import { TimeRange } from "./types/api/TimeRange"
 
 import { GetSubredditResponse, SubredditData } from "./types/api/responses/GetSubredditResponse"
 import { GetSubredditNamesResponse } from "./types/api/responses/GetSubredditNamesResponse"
-import { PostFilter } from "./post_filter/PostFilter"
+import {
+    hasNComments,
+    isFalse,
+    isTrue,
+    less,
+    more,
+    same,
+    sameOrLess,
+    sameOrMore,
+    hasLessOrSameThanNComments,
+    hasLessThanNComments,
+    isNotMatureContent,
+    hasMoreOrSameThanNComments,
+    hasMoreThanNComments,
+    hasMoreThanNCrossposts,
+    hasMoreThanNUpvoteRatio,
+    isMatureContent,
+} from "./post_filters/"
 
 export {
     // Main & config
@@ -29,5 +46,21 @@ export {
     GetSubredditResponse,
     SubredditData,
     GetSubredditNamesResponse,
-    PostFilter,
+    // Post filters
+    hasNComments,
+    isFalse,
+    isTrue,
+    less,
+    more,
+    same,
+    sameOrLess,
+    sameOrMore,
+    hasLessOrSameThanNComments,
+    hasLessThanNComments,
+    isNotMatureContent,
+    hasMoreOrSameThanNComments,
+    hasMoreThanNComments,
+    hasMoreThanNCrossposts,
+    hasMoreThanNUpvoteRatio,
+    isMatureContent,
 }

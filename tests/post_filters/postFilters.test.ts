@@ -1,29 +1,19 @@
-import { PostFilter } from "../../src"
 import { filterPosts } from "../../src/client/filterPosts"
 import { GetSubredditResponse } from "../../src"
+import { hasMoreThanNComments } from "../../src"
+import { hasMoreThanNUpvoteRatio } from "../../src"
+import { hasMoreThanNCrossposts } from "../../src"
 
 test("Should keep only posts with upvote ration > 0.95", async () => {
-    const moreThanNinetyFive: PostFilter = (subredditData) => {
-        return subredditData.upvote_ratio > 0.95
-    }
-
-    const result = filterPosts(fivePostsFromNews as unknown as GetSubredditResponse, [moreThanNinetyFive])
+    const result = filterPosts(fivePostsFromNews as unknown as GetSubredditResponse, [hasMoreThanNUpvoteRatio(0.95)])
 
     expect(result.data.children.length).toEqual(2)
 })
 
 test("Should keep only posts more than 100 comments AND more than 2 crossposts", async () => {
-    const moreThan100Comments: PostFilter = (subredditData) => {
-        return subredditData.num_comments > 100
-    }
-
-    const moreThan2Crossposts: PostFilter = (subredditData) => {
-        return subredditData.num_crossposts > 2
-    }
-
     const result = filterPosts(fivePostsFromNews as unknown as GetSubredditResponse, [
-        moreThan100Comments,
-        moreThan2Crossposts,
+        hasMoreThanNComments(100),
+        hasMoreThanNCrossposts(2),
     ])
 
     expect(result.data.children.length).toEqual(2)

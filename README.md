@@ -15,8 +15,6 @@
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
 
 # reddit-explorer
-The current version is **1.1.1**
-
 To see what has been done on each version, you can consult the 
 [CHANGELOG](https://github.com/davidalvarezr/reddit-explorer/blob/master/CHANGELOG.md).
 
@@ -37,23 +35,41 @@ You have to pass your app credentials, see how to generate some:
    ![credentials](./credentials.png)
 
 ## API
-For the moment **reddit-explorer** has 3 features:
-1. Authentication with clientId & secret
+For the moment **reddit-explorer** has 5 features:
+1. Authentication with clientId & secret & easily getting the `access_token`
 1. Getting similar subreddit names of a `string`
-1. Getting the content of a subreddit (+ automatic pagination handling)
-1. Easily filter the posts of a response   
+1. Getting the content of one or multiple subreddit(s) (+ automatic pagination handling)
+1. Easily filter the posts of a response
+1. Easily pick the attribute of each posts in the response
 
 I'm actively working on other features that are coming soon :) 
 
 ### Initializing the client
 ```ts
-import { createRedditClient, SortingMethod, TimeRange, PostFilter } from "reddit-explorer"
+import { createRedditClient, SortingMethod, TimeRange, PostFilter, moreThanNComments } from "reddit-explorer"
 
 const reddit = createRedditClient({
     clientId: "<clientId>",
     secret: "<secret>",
 })
 ```
+
+#### Getting the access token
+You usually do not need this method, but can be useful if you want to see the authentication detail. 
+
+```ts
+reddit.getAccessToken()
+
+// {
+//     "access_token": "-QFrCA5GkksABCEibAakz2fQbzUE62A",  <-- You can use this an put it in the next bearer token's request
+//     "token_type": "bearer",
+//     "device_id": "5f615d62-fa4c-11eb-b8bc-0242ac130003",
+//     "expires_in": 86400,
+//     "scope": "*"
+// }
+```
+
+---
 
 ### Getting subreddit names
 ```ts
@@ -75,6 +91,32 @@ reddit.getSubredditNames({ query: "photo" })
 //    ]
 // }
 ```
+
+### Include adult subreddit names
+
+There are three ways to achieve that:
+
+1. At the initialization of the client:
+    ```ts
+    import { createRedditClient } from "reddit-explorer"
+   
+    const reddit = createRedditClient({
+       clientId: "<clientId>",
+       secret: "<secret>",
+       matureContent: true,
+    })
+    ```
+2. When calling the method:
+    ```
+    reddit.getSubredditNames({ query: "photo", include_over_18: true })
+        .then((res) => console.log("photo", res))
+    ```
+3. After the initialization of the client
+    ```
+    reddit.config.setMatureContent(true)
+    ```
+
+---
 
 ### Getting the content of a subreddit
 You have to pass a name and a `SortingMethod`. Sorting method can be: `Hot`, `New`, `Random`, `Rising`, `Top` or
@@ -127,16 +169,16 @@ reddit
 
 #### Filter the results of a response
 If you want to keep only specific posts in the response, you can use `postFilters` when creating the client. This
-attribute accepts an array of functions, each one taking a `SubredditData` into parameter and returning a `boolean`:
+attribute accepts an array of functions, each one taking a `SubredditData` into parameter and returning a `boolean`,
+(see the type `PostFilter`). The package also comes with multiple `PostFilterCreator`'s, which are basically functions
+that return a `PostFilter`, such as `moreThanNComments(100)` below:
 ```ts
-const moreThan100Comments: PostFilter = (subredditData) => subredditData.num_comments > 100
-
 const moreThan2Crossposts: PostFilter = (subredditData) => subredditData.num_crossposts > 2
 
 const clientShowingOnlyPopularPosts = createRedditClient({
     clientId: secrets.clientId,
     secret: secrets.secret,
-    postFilters: [moreThan100Comments, moreThan2Crossposts],
+    postFilters: [moreThanNComments(100), moreThan2Crossposts],
 })
 ```
 
@@ -198,29 +240,15 @@ console.log("memeResults5To9", memeResults5To9.value)
 // }
 ```
 
-### Include adult subreddit names
+#### Getting the content of multiple subreddits
+Instead of passing a `string` to the `name` argument, you can pass a `string[]` to it:
 
-There are three ways to achieve that:
-
-1. At the initialization of the client:
-    ```ts
-    import { createRedditClient } from "reddit-explorer"
-   
-    const reddit = createRedditClient({
-       clientId: "<clientId>",
-       secret: "<secret>",
-       matureContent: true,
-    })
-    ```
-2. When calling the method:
-    ```
-    reddit.getSubredditNames({ query: "photo", include_over_18: true })
-        .then((res) => console.log("photo", res))
-    ```
-3. After the initialization of the client
-    ```
-    reddit.config.setMatureContent(true)
-    ```
+```ts
+const res = await client.getSubreddit({
+    sortMethod: SortingMethod.Top,
+    name: ["news", "meme"],
+})
+```
 
 ---
 

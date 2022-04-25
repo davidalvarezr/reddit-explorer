@@ -21,7 +21,11 @@ export type SubredditData<TGetSubredditArgs extends GetSubredditArgs = GetSubred
 
 type SubredditDataWithoutSubredditDetail<TGetSubredditArgs extends GetSubredditArgs> = {
     approved_at_utc: any
-    subreddit: string
+    subreddit: TGetSubredditArgs["name"] extends string
+        ? TGetSubredditArgs["name"]
+        : TGetSubredditArgs["name"] extends string[]
+        ? TGetSubredditArgs["name"][number]
+        : string
     selftext: string
     author_fullname: string
     saved: boolean

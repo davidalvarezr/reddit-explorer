@@ -5,7 +5,7 @@ import { Kind } from "../Kind"
 import { Url } from "../../tags/Url"
 
 type Base = Listing & {
-    name: string // the name of the subreddit
+    name: string | string[] // the name or the names of the subreddit(s)
     sortMethod: SortingMethod // one of hot, new, random, controversial, random, rising or top
 }
 
