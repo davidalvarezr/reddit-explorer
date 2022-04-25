@@ -26,3 +26,15 @@ test("Should get subreddit without sr_detail", async () => {
 
     expect(Object.keys(res.data.children[0].data)).not.toContain("sr_detail")
 })
+
+test("Should get multiple subreddits", async () => {
+    const res = await client.getSubreddit({
+        sortMethod: SortingMethod.Top,
+        name: ["news", "meme"],
+    })
+
+    const subredditNamesMap = res.data.children.map((post) => post.data.subreddit)
+
+    expect(subredditNamesMap).toContain("news")
+    expect(subredditNamesMap).toContain("meme")
+})

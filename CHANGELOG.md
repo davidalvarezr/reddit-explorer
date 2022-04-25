@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3.0 - 2022-04-25
+#### new features
+- search in multiple subreddits
+
 ## 1.2.0 - 2022-04-25
 #### new features
 - filters: filter the GetSubredditResponse according to an array of criteria
