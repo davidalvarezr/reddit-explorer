@@ -35,12 +35,11 @@ You have to pass your app credentials, see how to generate some:
    ![credentials](./credentials.png)
 
 ## API
-For the moment **reddit-explorer** has 5 features:
+For the moment **reddit-explorer** has 4 features:
 1. Authentication with clientId & secret & easily getting the `access_token`
 1. Getting similar subreddit names of a `string`
 1. Getting the content of one or multiple subreddit(s) (+ automatic pagination handling)
 1. Easily filter the posts of a response
-1. Easily pick the attribute of each posts in the response
 
 I'm actively working on other features that are coming soon :) 
 
