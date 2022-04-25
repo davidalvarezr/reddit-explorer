@@ -14,8 +14,12 @@ import { hasMoreThanNComments } from "./positive/hasMoreThanNComments"
 import { hasMoreThanNCrossposts } from "./positive/hasMoreThanNCrossposts"
 import { hasMoreThanNUpvoteRatio } from "./positive/hasMoreThanNUpvoteRatio"
 import { isMatureContent } from "./positive/isMatureContent"
+import { PostFilter } from "./PostFilter"
+import { PostFilterCreator } from "./PostFilterCreator"
 
 export {
+    PostFilter,
+    PostFilterCreator,
     hasNComments,
     isFalse,
     isTrue,

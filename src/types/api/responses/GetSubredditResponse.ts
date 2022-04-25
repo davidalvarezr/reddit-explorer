@@ -3,12 +3,15 @@ import { Url } from "../../tags/Url"
 import { IFrame } from "../../tags/IFrame"
 import { GetSubredditArgs } from "../requests/GetSubredditArgs"
 
-export type GetSubredditResponse<TGetSubredditArgs extends GetSubredditArgs = GetSubredditArgs> = {
+export type GetSubredditResponse<
+    TGetSubredditArgs extends GetSubredditArgs = GetSubredditArgs,
+    TSubredditData = SubredditData<TGetSubredditArgs>
+> = {
     kind: string
     data: {
         modash: string
         dist: number
-        children: { kind: Kind; data: SubredditData<TGetSubredditArgs> }[]
+        children: { kind: Kind; data: TSubredditData }[]
         after: string | null
         before: string | null
     }

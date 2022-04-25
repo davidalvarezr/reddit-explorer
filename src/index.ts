@@ -15,6 +15,8 @@ import { TimeRange } from "./types/api/TimeRange"
 import { GetSubredditResponse, SubredditData } from "./types/api/responses/GetSubredditResponse"
 import { GetSubredditNamesResponse } from "./types/api/responses/GetSubredditNamesResponse"
 import {
+    PostFilter,
+    PostFilterCreator,
     hasNComments,
     isFalse,
     isTrue,
@@ -47,6 +49,8 @@ export {
     SubredditData,
     GetSubredditNamesResponse,
     // Post filters
+    PostFilter,
+    PostFilterCreator,
     hasNComments,
     isFalse,
     isTrue,

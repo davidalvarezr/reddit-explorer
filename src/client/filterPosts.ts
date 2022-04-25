@@ -1,5 +1,5 @@
 import { GetSubredditResponse } from "../types/api/responses/GetSubredditResponse"
-import { PostFilter } from "../post_filters/PostFilter"
+import { PostFilter } from "../post_filters"
 import { GetSubredditArgs } from "../types/api/requests/GetSubredditArgs"
 
 export const filterPosts = <TGetSubredditArgs extends GetSubredditArgs>(

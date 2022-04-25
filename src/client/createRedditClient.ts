@@ -10,14 +10,15 @@ import { GetSubredditArgs } from "../types/api/requests/GetSubredditArgs"
 import { GetSubredditResponse } from "../types/api/responses/GetSubredditResponse"
 import * as fs from "fs"
 import { filterPosts } from "./filterPosts"
+import { pickPosts } from "./pickPosts"
 
 const filename = "token.txt"
 const CR = "\n"
 
 export const createRedditClient = (config: RedditClientConfiguration) => {
     const finalConfig = { ...defaultConfig, ...config }
-    const { clientId, secret, userAgent, grantType, deviceId = uuidv4(), debug, postFilters } = finalConfig
-    let { matureContent } = finalConfig
+    const { clientId, secret, userAgent, grantType, deviceId = uuidv4(), debug, postFilters, postPickers } = finalConfig
+    let { matureContent, defaultLimit } = finalConfig
 
     const api = axios.create({
         baseURL: Endpoint.BaseUrl,
@@ -55,7 +56,7 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
     /**
      * Get access token for unauthenticated user
      */
-    const getAccessToken = async () => {
+    const getAccessToken = async (): Promise<AccessTokenResponse> => {
         const params = new URLSearchParams()
         params.append("grant_type", grantType)
         params.append("device_id", deviceId)
@@ -90,14 +91,19 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
         args: TGetSubredditArgs
     ): Promise<GetSubredditResponse<TGetSubredditArgs>> => {
         const { name, sortMethod, ...restParams } = args
+        const paramsWithConfig: typeof restParams = {
+            limit: defaultLimit,
+            ...restParams,
+        }
 
         const nameParam = Array.isArray(name) ? name.join("+") : name
 
         const response = await api.get<GetSubredditResponse<TGetSubredditArgs>>(`/r/${nameParam}/${sortMethod}`, {
-            params: restParams,
+            params: paramsWithConfig,
         })
 
-        return filterPosts(response.data, postFilters)
+        const filteredPosts = filterPosts(response.data, postFilters)
+        return pickPosts(filteredPosts, postPickers)
     }
 
     async function* getSubredditIterator<TGetSubredditArgs extends GetSubredditArgs>(
