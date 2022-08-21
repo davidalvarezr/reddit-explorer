@@ -1,23 +1,22 @@
-import { defaultConfig } from "../config/defaultConfig"
-import { Endpoint } from "../constants/Endpoint"
-import { uuidv4 } from "../helpers/uuidv4"
+import { GetSubredditNamesArgs } from "../types/api/requests/GetSubredditNamesArgs.js"
+import { uuidv4 } from "../helpers/uuidv4.js"
+import { GetSubredditArgs } from "../types/api/requests/GetSubredditArgs.js"
+import { RedditClientConfiguration } from "../config/RedditClientConfiguration.js"
+import { Endpoint } from "../constants/Endpoint.js"
+import { filterPosts } from "./filterPosts.js"
+import { defaultConfig } from "../config/defaultConfig.js"
+import { GetSubredditNamesResponse } from "../types/api/responses/GetSubredditNamesResponse.js"
 import axios from "axios"
-import { GetSubredditNamesArgs } from "../types/api/requests/GetSubredditNamesArgs"
-import { GetSubredditNamesResponse } from "../types/api/responses/GetSubredditNamesResponse"
-import { RedditClientConfiguration } from "../config/RedditClientConfiguration"
-import { AccessTokenResponse } from "../types/api/responses/AccessTokenResponse"
-import { GetSubredditArgs } from "../types/api/requests/GetSubredditArgs"
-import { GetSubredditResponse } from "../types/api/responses/GetSubredditResponse"
-import * as fs from "fs"
-import { filterPosts } from "./filterPosts"
-
-const filename = "token.txt"
-const CR = "\n"
+import { AccessTokenResponse } from "../types/api/responses/AccessTokenResponse.js"
+import { GetSubredditResponse } from "../types/api/responses/GetSubredditResponse.js"
+import { createAuthenticationPersistor } from "../persistence/authentication/createAuthenticationPersistor.js"
 
 export const createRedditClient = (config: RedditClientConfiguration) => {
     const finalConfig = { ...defaultConfig, ...config }
     const { clientId, secret, userAgent, grantType, deviceId = uuidv4(), debug, postFilters } = finalConfig
     let { matureContent } = finalConfig
+
+    const authPersistor = createAuthenticationPersistor()
 
     const api = axios.create({
         baseURL: Endpoint.BaseUrl,
@@ -28,11 +27,10 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
 
     // Retrieving token info
     try {
-        if (fs.existsSync(filename)) {
-            const rawTokenAndExpiration = fs.readFileSync(filename, { encoding: "utf-8" })
-            const tokenAndExpiration = rawTokenAndExpiration.split(CR)
-            token = tokenAndExpiration[0]
-            expirationTimestampInMilliseconds = tokenAndExpiration[1] as unknown as number
+        const tokenAndExp = authPersistor.retrieveAuthentication()
+        if (!!tokenAndExp) {
+            token = tokenAndExp.token
+            expirationTimestampInMilliseconds = tokenAndExp.expirationTimestamp
         }
     } catch (e) {
         console.error(e)
@@ -76,8 +74,9 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
             const {
                 data: { access_token, expires_in: expiresInInSeconds },
             } = response
-            fs.writeFileSync(filename, [access_token, Date.now() + expiresInInSeconds * 1000].join(CR), {
-                encoding: "utf-8",
+            authPersistor.persistAuthentication({
+                token: access_token,
+                expirationTimestamp: Date.now() + expiresInInSeconds * 1000,
             })
         } catch (e) {
             console.error(e)
@@ -106,7 +105,7 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
         let after: string | null = null
 
         while (true) {
-            const res = await getSubreddit({
+            const res: GetSubredditResponse<TGetSubredditArgs> = await getSubreddit({
                 after,
                 ...args,
             })

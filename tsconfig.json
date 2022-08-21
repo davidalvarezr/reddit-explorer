@@ -1,14 +1,11 @@
 {
+  "extends": "./tsconfig-base.json",
   "compilerOptions": {
-    "declaration": true,
-    "strictNullChecks": true,
-    "target": "es5",
-    "outDir": "dist",
-    "module": "commonjs",
-    "moduleResolution": "node",
-    "sourceMap": true,
-    "lib": ["es2017", "dom"],
-    "rootDir": "src"
-  },
-  "files": ["src/index.ts"],
+    "module": "esnext",
+    "outDir": "dist/mjs",
+    "target": "esnext",
+    "lib": [
+      "dom"
+    ]
+  }
 }

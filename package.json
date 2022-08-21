@@ -2,14 +2,21 @@
   "name": "reddit-explorer",
   "version": "1.3.0",
   "description": "Simple reddit client that allows to fetch reddit names and content from any subreddit, without any account authentication.",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/mjs/index.js",
+  "exports": {
+    ".": {
+      "import": "./dist/mjs/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
+  "types": "./dist/mjs/index.d.ts",
   "files": [
-    "dist"
+    "./dist/"
   ],
   "scripts": {
-    "build": "tsc",
-    "start": "yarn prepare && node dist/main.js",
+    "build": "node ./build.js",
+    "start": "yarn prepare && node dist/mjs/main.js",
     "prepare": "yarn build",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write"
   },
