@@ -1,8 +1,5 @@
 import { filterPosts } from "../../src/client/filterPosts"
-import { GetSubredditResponse } from "../../src"
-import { hasMoreThanNComments } from "../../src"
-import { hasMoreThanNUpvoteRatio } from "../../src"
-import { hasMoreThanNCrossposts } from "../../src"
+import { GetSubredditResponse, hasMoreThanNComments, hasMoreThanNCrossposts, hasMoreThanNUpvoteRatio } from "../../src"
 
 test("Should keep only posts with upvote ration > 0.95", async () => {
     const result = filterPosts(fivePostsFromNews as unknown as GetSubredditResponse, [hasMoreThanNUpvoteRatio(0.95)])
