@@ -8,11 +8,7 @@ import { RedditClientConfiguration } from "../config/RedditClientConfiguration"
 import { AccessTokenResponse } from "../types/api/responses/AccessTokenResponse"
 import { GetSubredditArgs } from "../types/api/requests/GetSubredditArgs"
 import { GetSubredditResponse } from "../types/api/responses/GetSubredditResponse"
-import * as fs from "fs"
 import { filterPosts } from "./filterPosts"
-
-const filename = "token.txt"
-const CR = "\n"
 
 export const createRedditClient = (config: RedditClientConfiguration) => {
     const finalConfig = { ...defaultConfig, ...config }
@@ -25,18 +21,6 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
 
     let expirationTimestampInMilliseconds = 0
     let token = ""
-
-    // Retrieving token info
-    try {
-        if (fs.existsSync(filename)) {
-            const rawTokenAndExpiration = fs.readFileSync(filename, { encoding: "utf-8" })
-            const tokenAndExpiration = rawTokenAndExpiration.split(CR)
-            token = tokenAndExpiration[0]
-            expirationTimestampInMilliseconds = tokenAndExpiration[1] as unknown as number
-        }
-    } catch (e) {
-        console.error(e)
-    }
 
     api.interceptors.request.use(async (axiosRequestConfig) => {
         if (Date.now() > expirationTimestampInMilliseconds) {
@@ -55,7 +39,7 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
     /**
      * Get access token for unauthenticated user
      */
-    const getAccessToken = async () => {
+    const getAccessToken = async (): Promise<AccessTokenResponse> => {
         const params = new URLSearchParams()
         params.append("grant_type", grantType)
         params.append("device_id", deviceId)
@@ -70,18 +54,6 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
                 password: secret,
             },
         })
-
-        // Persisting token info
-        try {
-            const {
-                data: { access_token, expires_in: expiresInInSeconds },
-            } = response
-            fs.writeFileSync(filename, [access_token, Date.now() + expiresInInSeconds * 1000].join(CR), {
-                encoding: "utf-8",
-            })
-        } catch (e) {
-            console.error(e)
-        }
 
         return response.data
     }
