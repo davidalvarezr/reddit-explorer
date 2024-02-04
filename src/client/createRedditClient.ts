@@ -1,14 +1,14 @@
-import { defaultConfig } from "../config/defaultConfig"
-import { Endpoint } from "../constants/Endpoint"
-import { uuidv4 } from "../helpers/uuidv4"
-import axios from "axios"
-import { GetSubredditNamesArgs } from "../types/api/requests/GetSubredditNamesArgs"
-import { GetSubredditNamesResponse } from "../types/api/responses/GetSubredditNamesResponse"
-import { RedditClientConfiguration } from "../config/RedditClientConfiguration"
-import { AccessTokenResponse } from "../types/api/responses/AccessTokenResponse"
-import { GetSubredditArgs } from "../types/api/requests/GetSubredditArgs"
-import { GetSubredditResponse } from "../types/api/responses/GetSubredditResponse"
-import { filterPosts } from "./filterPosts"
+import { defaultConfig } from "../config/defaultConfig";
+import { Endpoint } from "../constants/Endpoint";
+import { uuidv4 } from "../helpers/uuidv4";
+import axios from "axios";
+import { GetSubredditNamesArgs } from "../types/api/requests/GetSubredditNamesArgs";
+import { GetSubredditNamesResponse } from "../types/api/responses/GetSubredditNamesResponse";
+import { RedditClientConfiguration } from "../config/RedditClientConfiguration";
+import { AccessTokenResponse } from "../types/api/responses/AccessTokenResponse";
+import { GetSubredditArgs } from "../types/api/requests/GetSubredditArgs";
+import { GetSubredditResponse } from "../types/api/responses/GetSubredditResponse";
+import { filterPosts } from "./filterPosts";
 
 export const createRedditClient = (config: RedditClientConfiguration) => {
     const finalConfig = { ...defaultConfig, ...config }
@@ -74,11 +74,11 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
 
     async function* getSubredditIterator<TGetSubredditArgs extends GetSubredditArgs>(
         args: TGetSubredditArgs
-    ): AsyncIterator<GetSubredditResponse<TGetSubredditArgs>, never, void> {
+    ): AsyncIterator<GetSubredditResponse<TGetSubredditArgs>> {
         let after: string | null = null
 
         while (true) {
-            const res = await getSubreddit({
+            const res: GetSubredditResponse<TGetSubredditArgs> = await getSubreddit({
                 after,
                 ...args,
             })

@@ -7,8 +7,14 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "sourceMap": true,
-    "lib": ["es2017", "dom"],
+    "lib": [
+      "es2017",
+      "dom",
+      "esnext.asynciterable"
+    ],
     "rootDir": "src"
   },
-  "files": ["src/index.ts"],
+  "files": [
+    "src/index.ts"
+  ]
 }
