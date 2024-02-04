@@ -3,7 +3,7 @@ import { PostFilter } from "../PostFilter"
 import { PostFilterCreator } from "../PostFilterCreator"
 
 export const same =
-    (attribute: keyof SubredditData): PostFilterCreator<number> =>
+    (attribute: keyof SubredditData): PostFilterCreator<string | number> =>
     (n): PostFilter =>
     (post) =>
         post[attribute] === n

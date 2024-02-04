@@ -4,20 +4,19 @@ import { RedditClientConfiguration } from "../config/RedditClientConfiguration"
 import { buildLink } from "../helpers/buildLink"
 import { filterKeys } from "../helpers/filterKeys"
 import { applyLocalTimezoneOffset } from "../helpers/applyLocalTimezoneOffset"
-import {
-    SimpleGetSubredditArgs,
-    SimplePost,
-} from "../types/api/reddit-simple-client/requests/SimpleGetSubredditArgs.js"
+import { SimpleGetSubredditArgs, SimplePost } from "../types/api/reddit-simple-client/requests/SimpleGetSubredditArgs"
 import { SimpleGetSubredditResponse } from "../types/api/reddit-simple-client/response/SimpleGetSubredditResponse"
 import { Optional } from "../types/Optional"
 import { GetSubredditNamesResponse } from "../types/api/responses/GetSubredditNamesResponse"
+import { defaultConfig } from "../config/defaultConfig"
 
 /**
  * Same as RedditClient but returns only essentials infos
  * @param options
  */
 export const createRedditSimpleClient = (options: RedditClientConfiguration) => {
-    const api = createRedditClient(options)
+    const finalConfig = { ...defaultConfig, ...options }
+    const api = createRedditClient(finalConfig)
 
     // TODO: create an type with "optional" fields for the use and non-optional for internal logic
     const getSubreddit = async <T extends SimpleGetSubredditArgs>(
@@ -51,7 +50,7 @@ export const createRedditSimpleClient = (options: RedditClientConfiguration) => 
     const getSubredditNames = async (args: GetSubredditNamesArgs): Promise<GetSubredditNamesResponse> => {
         return api.getSubredditNames({
             ...args,
-            include_over_18: options.matureContent,
+            include_over_18: finalConfig.matureContent,
         })
     }
 
