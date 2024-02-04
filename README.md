@@ -184,7 +184,7 @@ const clientShowingOnlyPopularPosts = createRedditClient({
 
 ### Loading next results
 
-The API can only load a max amount of 25 posts. To load the next 25 posts, you have to pass the `after` param.
+The API can only load a max amount of 100 posts (the default is 25). To load the next posts, you have to pass the `after` param.
 You can find the value of the `after` in the previous response of the request you made, in `response.after`. It contains
 the `name` (`SubredditData.name`) of the last post in the previous call.
 
@@ -247,6 +247,51 @@ const res = await client.getSubreddit({
     sortMethod: SortingMethod.Top,
     name: ["news", "meme"],
 })
+```
+
+### Reddit simple client
+
+`createRedditSimpleClient` allows to get only the essential. This client will return a modified response containing only:
+- kind
+- title
+- url
+- subreddit
+- thumbnail
+- permalink
+- link
+- createdAtUtc
+- createdAtLocal
+
+For the moment, the simple client only supports `getSubreddit` and `getSubredditNames`.
+```typescript
+const reddit = createRedditSimpleClient({
+    clientId: "<clientId>",
+    secret: "<clientSecret>",
+})
+
+const result = await reddit.getSubreddit({
+    sortMethod: SortingMethod.Hot,
+    name: "memes",
+    fields: ["title", "url"],
+})
+```
+In the above example, I picked only the fields that I needed, here is the response:
+```json5
+{
+  before: null,
+  after: 't3_1aihq82',
+  data: [
+    {
+      title: 'r/Memes is looking for new moderators! Interested? Fill out our application!',
+      url: 'https://docs.google.com/forms/d/e/1FAIpQLSfBlrL6LVOktwIdGubvbJ7REeh9vANiBTIpUecW63PHINQECg/viewform'
+    },
+    {
+      title: 'Worst days in University',
+      url: 'https://i.redd.it/u8hlua9lbkgc1.jpeg'
+    },
+    // some other results...
+  ],
+}
 ```
 
 ---

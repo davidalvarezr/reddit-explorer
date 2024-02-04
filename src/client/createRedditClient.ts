@@ -9,10 +9,14 @@ import { AccessTokenResponse } from "../types/api/responses/AccessTokenResponse"
 import { GetSubredditArgs } from "../types/api/requests/GetSubredditArgs"
 import { GetSubredditResponse } from "../types/api/responses/GetSubredditResponse"
 import { filterPosts } from "./filterPosts"
+import { validateConfig } from "../config/configValidator"
 
 export const createRedditClient = (config: RedditClientConfiguration) => {
     const finalConfig = { ...defaultConfig, ...config }
-    const { clientId, secret, userAgent, grantType, deviceId = uuidv4(), debug, postFilters } = finalConfig
+
+    validateConfig(finalConfig)
+
+    const { clientId, secret, userAgent, grantType, deviceId = uuidv4(), debug, postFilters, limit } = finalConfig
     let { matureContent } = finalConfig
 
     const api = axios.create({
@@ -41,7 +45,7 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
      */
     const getAccessToken = async (): Promise<AccessTokenResponse> => {
         const params = new URLSearchParams()
-        params.append("grant_type", grantType)
+        params.append("grant_type", grantType!) // TODO: fix "!"
         params.append("device_id", deviceId)
 
         const response = await axios.post<AccessTokenResponse>(Endpoint.AccessToken, params, {
@@ -66,7 +70,7 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
         const nameParam = Array.isArray(name) ? name.join("+") : name
 
         const response = await api.get<GetSubredditResponse<TGetSubredditArgs>>(`/r/${nameParam}/${sortMethod}`, {
-            params: restParams,
+            params: { limit, ...restParams },
         })
 
         return filterPosts(response.data, postFilters)
