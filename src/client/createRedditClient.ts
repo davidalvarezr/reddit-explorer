@@ -1,14 +1,14 @@
-import { defaultConfig } from "../config/defaultConfig";
-import { Endpoint } from "../constants/Endpoint";
-import { uuidv4 } from "../helpers/uuidv4";
-import axios from "axios";
-import { GetSubredditNamesArgs } from "../types/api/requests/GetSubredditNamesArgs";
-import { GetSubredditNamesResponse } from "../types/api/responses/GetSubredditNamesResponse";
-import { RedditClientConfiguration } from "../config/RedditClientConfiguration";
-import { AccessTokenResponse } from "../types/api/responses/AccessTokenResponse";
-import { GetSubredditArgs } from "../types/api/requests/GetSubredditArgs";
-import { GetSubredditResponse } from "../types/api/responses/GetSubredditResponse";
-import { filterPosts } from "./filterPosts";
+import { defaultConfig } from "../config/defaultConfig"
+import { Endpoint } from "../constants/Endpoint"
+import { uuidv4 } from "../helpers/uuidv4"
+import axios from "axios"
+import { GetSubredditNamesArgs } from "../types/api/requests/GetSubredditNamesArgs"
+import { GetSubredditNamesResponse } from "../types/api/responses/GetSubredditNamesResponse"
+import { RedditClientConfiguration } from "../config/RedditClientConfiguration"
+import { AccessTokenResponse } from "../types/api/responses/AccessTokenResponse"
+import { GetSubredditArgs } from "../types/api/requests/GetSubredditArgs"
+import { GetSubredditResponse } from "../types/api/responses/GetSubredditResponse"
+import { filterPosts } from "./filterPosts"
 
 export const createRedditClient = (config: RedditClientConfiguration) => {
     const finalConfig = { ...defaultConfig, ...config }
@@ -29,7 +29,7 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
             expirationTimestampInMilliseconds = Date.now() + response.expires_in * 1000
         }
 
-        axiosRequestConfig.headers.common["Authorization"] = "Bearer " + token
+        axiosRequestConfig.headers.Authorization = "Bearer " + token
 
         debug?.logToken && console.log("token", token)
 
