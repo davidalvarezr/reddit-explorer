@@ -1,8 +1,6 @@
 import { Listing } from "./Listing"
 import { SortingMethod } from "../SortingMethod"
 import { TimeRange } from "../TimeRange"
-import { Kind } from "../Kind"
-import { Url } from "../../tags/Url"
 
 type Base = Listing & {
     name: string | string[] // the name or the names of the subreddit(s)
@@ -134,19 +132,3 @@ type Controversial = Base &
     }
 
 export type GetSubredditArgs = Hot | New | Random | Rising | Top | Controversial
-
-export type SimplePost = {
-    kind: Kind
-    title: string
-    url: Url
-    subreddit: string
-    thumbnail: Url
-    permalink: string
-    link: string
-    createdAtUtc: Date
-    createdAtLocal: Date
-}
-
-export type SimpleGetSubredditArgs = GetSubredditArgs & {
-    fields?: Array<keyof SimplePost>
-}
