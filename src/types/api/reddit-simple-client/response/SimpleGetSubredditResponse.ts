@@ -1,4 +1,4 @@
-import { SimpleGetSubredditArgs, SimplePost } from "../requests/SimpleGetSubredditArgs.js"
+import { SimpleGetSubredditArgs, SimplePost } from "../requests/SimpleGetSubredditArgs"
 
 export type SimpleGetSubredditResponse<T extends SimpleGetSubredditArgs> = {
     before: string | null

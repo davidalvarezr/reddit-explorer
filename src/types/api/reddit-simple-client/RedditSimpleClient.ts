@@ -1,3 +1,3 @@
-import { createRedditSimpleClient } from "../../../client/createRedditSimpleClient.js"
+import { createRedditSimpleClient } from "../../../client/createRedditSimpleClient"
 
 export type RedditSimpleClient = ReturnType<typeof createRedditSimpleClient>

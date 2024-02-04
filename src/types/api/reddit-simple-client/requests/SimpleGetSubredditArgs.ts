@@ -1,6 +1,6 @@
-import { Kind } from "../../Kind.js"
-import { Url } from "../../../tags/Url.js"
-import { GetSubredditArgs } from "../../requests/GetSubredditArgs.js"
+import { Kind } from "../../Kind"
+import { Url } from "../../../tags/Url"
+import { GetSubredditArgs } from "../../requests/GetSubredditArgs"
 
 export type SimplePost = {
     kind: Kind

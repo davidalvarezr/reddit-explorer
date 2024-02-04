@@ -1,13 +1,13 @@
 // Main & config
 
 import { createRedditClient } from "./client/createRedditClient"
-import { createRedditSimpleClient } from "./client/createRedditSimpleClient.js"
+import { createRedditSimpleClient } from "./client/createRedditSimpleClient"
 import { RedditClientConfiguration } from "./config/RedditClientConfiguration"
 
 // Requests
 import { GetSubredditArgs } from "./types/api/requests/GetSubredditArgs"
 import { GetSubredditNamesArgs } from "./types/api/requests/GetSubredditNamesArgs"
-import { SimpleGetSubredditArgs } from "./types/api/reddit-simple-client/requests/SimpleGetSubredditArgs.js"
+import { SimpleGetSubredditArgs } from "./types/api/reddit-simple-client/requests/SimpleGetSubredditArgs"
 
 import { SortingMethod } from "./types/api/SortingMethod"
 import { TimeRange } from "./types/api/TimeRange"

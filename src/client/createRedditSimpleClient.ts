@@ -1,16 +1,16 @@
-import { createRedditClient } from "./createRedditClient.js"
-import { GetSubredditNamesArgs } from "../types/api/requests/GetSubredditNamesArgs.js"
-import { RedditClientConfiguration } from "../config/RedditClientConfiguration.js"
-import { buildLink } from "../helpers/buildLink.js"
-import { filterKeys } from "../helpers/filterKeys.js"
-import { applyLocalTimezoneOffset } from "../helpers/applyLocalTimezoneOffset.js"
+import { createRedditClient } from "./createRedditClient"
+import { GetSubredditNamesArgs } from "../types/api/requests/GetSubredditNamesArgs"
+import { RedditClientConfiguration } from "../config/RedditClientConfiguration"
+import { buildLink } from "../helpers/buildLink"
+import { filterKeys } from "../helpers/filterKeys"
+import { applyLocalTimezoneOffset } from "../helpers/applyLocalTimezoneOffset"
 import {
     SimpleGetSubredditArgs,
     SimplePost,
 } from "../types/api/reddit-simple-client/requests/SimpleGetSubredditArgs.js"
-import { SimpleGetSubredditResponse } from "../types/api/reddit-simple-client/response/SimpleGetSubredditResponse.js"
-import { Optional } from "../types/Optional.js"
-import { GetSubredditNamesResponse } from "../types/api/responses/GetSubredditNamesResponse.js"
+import { SimpleGetSubredditResponse } from "../types/api/reddit-simple-client/response/SimpleGetSubredditResponse"
+import { Optional } from "../types/Optional"
+import { GetSubredditNamesResponse } from "../types/api/responses/GetSubredditNamesResponse"
 
 /**
  * Same as RedditClient but returns only essentials infos

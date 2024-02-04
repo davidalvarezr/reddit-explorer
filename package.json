@@ -9,8 +9,8 @@
   ],
   "scripts": {
     "build": "tsc",
-    "start": "yarn prepare && node dist/main.js",
-    "prepare": "yarn build",
+    "build:main": "tsc -p tsconfig-main.json",
+    "start": "yarn build:main && node dist/main.js",
     "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write"
   },
   "repository": {
