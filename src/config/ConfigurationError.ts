@@ -1,26 +1,24 @@
-export enum ConfigErrorName {
-    MissingClientId = "MissingClientId",
-    MissingClientSecret = "MissingClientSecret",
-    MissingGrantType = "MissingGrantType",
-    WrongLimit = "WrongLimit",
-}
-
-export const validationErrors = {
-    [ConfigErrorName.MissingClientId]: "'clientId' is missing",
-    [ConfigErrorName.MissingClientSecret]: "'clientSecret' is missing",
-    [ConfigErrorName.MissingGrantType]: "'grantType' is missing",
-    [ConfigErrorName.WrongLimit]: "Wrong 'limit' given. Should be between [1, 100]",
-}
-
 export class ConfigurationError extends Error {
-    name: ConfigErrorName
+    static MISSING_CLIENT_ID = (): Error => buildError("MISSING_CLIENT_ID", "'clientId' is missing")
+    static MISSING_CLIENT_SECRET = (): Error => buildError("MISSING_CLIENT_SECRET", "'clientSecret' is missing")
+    static WRONG_LIMIT = (limitGiven: number): Error =>
+        buildError("WRONG_LIMIT", "Wrong 'limit' given. Should be between [0, 100]. Given: " + limitGiven)
+
+    name: string
     message: string
     cause: any
 
-    constructor({ name, message, cause }: { name: ConfigErrorName; message: string; cause?: any }) {
-        super()
+    constructor({ name, message }: ConfError) {
+        super(message)
         this.name = name
         this.message = message
-        this.cause = cause
+        Object.setPrototypeOf(this, new.target.prototype) // restore prototype chain
     }
 }
+
+const buildError = (name: string, message: string): Error => ({ name, message })
+type ConfError = ReturnType<
+    | typeof ConfigurationError.MISSING_CLIENT_ID
+    | typeof ConfigurationError.MISSING_CLIENT_SECRET
+    | typeof ConfigurationError.WRONG_LIMIT
+>
