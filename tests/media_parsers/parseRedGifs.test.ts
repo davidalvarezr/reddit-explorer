@@ -1,7 +1,7 @@
-import { parseRedGifsPost } from "../../src/media_parsers/red_gifs/parseRedGifsPost"
-import { Extension } from "../../src/media_parsers/Extension"
-import { Quality } from "../../src/media_parsers/Quality"
-import { MediaType } from "../../src/media_parsers/MediaType"
+import { parseRedGifsPost } from "../../src/media/red_gifs/parseRedGifsPost"
+import { Extension } from "../../src/media/Extension"
+import { Quality } from "../../src/media/Quality"
+import { MediaType } from "../../src/media/MediaType"
 
 const postContainingRedGifsMedia = {
     approved_at_utc: null,

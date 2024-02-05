@@ -24,8 +24,8 @@ type SubredditDataWithoutSubredditDetail<TGetSubredditArgs extends GetSubredditA
     subreddit: TGetSubredditArgs["name"] extends string
         ? TGetSubredditArgs["name"]
         : TGetSubredditArgs["name"] extends string[]
-        ? TGetSubredditArgs["name"][number]
-        : string
+          ? TGetSubredditArgs["name"][number]
+          : string
     selftext: string
     author_fullname: string
     saved: boolean
@@ -62,7 +62,7 @@ type SubredditDataWithoutSubredditDetail<TGetSubredditArgs extends GetSubredditA
     user_reports: any[]
     secure_media: null | {
         type: string
-        oembed: {
+        oembed?: {
             provider_url: string
             version: string
             title: string
@@ -76,6 +76,19 @@ type SubredditDataWithoutSubredditDetail<TGetSubredditArgs extends GetSubredditA
             thumbnail_url: string
             thumbnail_height: number
             author_url: string
+        }
+        reddit_video?: {
+            bitrate_kbps: number
+            fallback_url: Url
+            has_audio: boolean
+            height: number
+            width: number
+            scrubber_media_url: string
+            dash_url: string
+            duration: number
+            hls_url: string
+            is_gif: false
+            transcoding_status: string
         }
     }
     is_reddit_media_domain: boolean
@@ -165,7 +178,7 @@ type SubredditDataWithoutSubredditDetail<TGetSubredditArgs extends GetSubredditA
                     }
                 }
                 id: string
-            }
+            },
         ]
         reddit_video_preview: {
             bitrate_kbps: number
@@ -219,7 +232,7 @@ type SubredditDataWithoutSubredditDetail<TGetSubredditArgs extends GetSubredditA
     num_crossposts: number
     media: null | {
         type: string
-        oembed: {
+        oembed?: {
             provider_url: Url
             version: string
             title: string

@@ -29,6 +29,11 @@ or
 yarn add reddit-explorer
 ```
 
+---
+# TODO: get subreddit media documentation
+
+---
+
 ### Create a dev application on Reddit (if you do not have already one)
 
 You have to pass your app credentials, see how to generate some:

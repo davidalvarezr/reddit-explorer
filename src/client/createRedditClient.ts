@@ -7,9 +7,22 @@ import { GetSubredditNamesResponse } from "../types/api/responses/GetSubredditNa
 import { RedditClientConfiguration } from "../config/RedditClientConfiguration"
 import { AccessTokenResponse } from "../types/api/responses/AccessTokenResponse"
 import { GetSubredditArgs } from "../types/api/requests/GetSubredditArgs"
-import { GetSubredditResponse } from "../types/api/responses/GetSubredditResponse"
+import { GetSubredditResponse, SubredditData } from "../types/api/responses/GetSubredditResponse"
 import { filterPosts } from "./filterPosts"
 import { validateConfig } from "../config/configValidator"
+import { MediaGetSubredditResponse } from "../media/MediaGetSubredditResponse"
+import { IMediaParser } from "../media/IMediaParser"
+import { isRedGifsMedia } from "../media/red_gifs/isRedGifsMedia"
+import { parseRedGifsPost } from "../media/red_gifs/parseRedGifsPost"
+import { isRedditMedia } from "../media/reddit/isRedditMedia"
+import { parseRedditPost } from "../media/reddit/parseRedditPost"
+import { Media } from "../media/Media"
+import { isRedditGalleryMedia } from "../media/reddit/isRedditGalleryMedia"
+import { parseRedditGalleryPost } from "../media/reddit/parseRedditGalleryPost"
+import { isImgurMedia } from "../media/imgur/isImgurMedia"
+import { parseImgurPost } from "../media/imgur/parseImgurPost"
+import { isRedditVideoMedia } from "../media/reddit/isRedditVideoMedia"
+import { parseRedditVideoPost } from "../media/reddit/parseRedditVideoPost"
 
 export const createRedditClient = (config: RedditClientConfiguration) => {
     const finalConfig = { ...defaultConfig, ...config }
@@ -93,6 +106,40 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
         }
     }
 
+    const getSubredditMedias = async <TGetSubredditArgs extends GetSubredditArgs>(
+        args: TGetSubredditArgs
+    ): Promise<MediaGetSubredditResponse> => {
+        const res = await getSubreddit(args)
+        return {
+            before: res.data.before,
+            after: res.data.after,
+            data: res.data.children.map((child) => parseMedia(child.data)).filter((media) => !!media) as Media[],
+        }
+    }
+
+    const parseMedia = (post: SubredditData): Media | undefined => {
+        const parser = getParser(post)
+        if (!parser) {
+            console.info("[reddit-explorer] Did not find any media for url: " + post.url)
+            return undefined
+        }
+
+        return {
+            title: post.title,
+            thumbnail: parser.getThumbnail(),
+            media: parser.getMedia(),
+            mediaType: parser.getMediaType(),
+        }
+    }
+
+    const getParser = (post: SubredditData): IMediaParser | undefined => {
+        if (isRedGifsMedia(post)) return parseRedGifsPost(post)
+        if (isImgurMedia(post)) return parseImgurPost(post)
+        if (isRedditMedia(post)) return parseRedditPost(post)
+        if (isRedditVideoMedia(post)) return parseRedditVideoPost(post)
+        if (isRedditGalleryMedia(post)) return parseRedditGalleryPost(post)
+    }
+
     const getSubredditNames = async (params: GetSubredditNamesArgs): Promise<GetSubredditNamesResponse> => {
         const paramsWithConfig: GetSubredditNamesArgs = {
             include_over_18: matureContent,
@@ -117,6 +164,7 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
         getAccessToken,
         getSubreddit,
         getSubredditIterator,
+        getSubredditMedias,
         getSubredditNames,
         config: conf,
     }

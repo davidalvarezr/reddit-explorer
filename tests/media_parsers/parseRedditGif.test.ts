@@ -1,5 +1,5 @@
-import { parseRedditPost } from "../../src/media_parsers/reddit/parseRedditPost"
-import { MediaType } from "../../src/media_parsers/MediaType"
+import { parseRedditPost } from "../../src/media/reddit/parseRedditPost"
+import { MediaType } from "../../src/media/MediaType"
 
 const postContainingRedditGif = {
     approved_at_utc: null,

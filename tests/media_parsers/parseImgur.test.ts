@@ -1,6 +1,6 @@
-import { Extension } from "../../src/media_parsers/Extension"
-import { parseImgurPost } from "../../src/media_parsers/imgur/parseImgurPost"
-import { MediaType } from "../../src/media_parsers/MediaType"
+import { Extension } from "../../src/media/Extension"
+import { parseImgurPost } from "../../src/media/imgur/parseImgurPost"
+import { MediaType } from "../../src/media/MediaType"
 
 const postContainingImgurMedia = {
     approved_at_utc: null,

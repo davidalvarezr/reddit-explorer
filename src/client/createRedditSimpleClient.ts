@@ -20,7 +20,7 @@ export const createRedditSimpleClient = (options: RedditClientConfiguration) => 
     // TODO: create an type with "optional" fields for the use and non-optional for internal logic
     const getSubreddit = async <T extends SimpleGetSubredditArgs>(
         args: Optional<T, "fields">
-    ): Promise<SimpleGetSubredditResponse<T>> => {
+    ): Promise<SimpleGetSubredditResponse> => {
         const { fields = [] as Partial<T>["fields"] } = args
         const subreddit = await api.getSubreddit({ ...args, fields } as T)
 

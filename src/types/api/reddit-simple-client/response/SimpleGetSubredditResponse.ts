@@ -1,9 +1,7 @@
-import { SimpleGetSubredditArgs, SimplePost } from "../requests/SimpleGetSubredditArgs"
+import { SimplePost } from "../requests/SimpleGetSubredditArgs"
 
-export type SimpleGetSubredditResponse<T extends SimpleGetSubredditArgs> = {
+export type SimpleGetSubredditResponse = {
     before: string | null
     after: string | null
-    // TODO: figure out why this type is not working properly
-    // data: T["fields"]["length"] extends 0 ? SimplePost[] : Pick<SimplePost, T["fields"][number]>[]
     data: SimplePost[]
 }
