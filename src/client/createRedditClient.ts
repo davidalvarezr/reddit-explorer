@@ -1,18 +1,22 @@
-import { defaultConfig } from "../config/defaultConfig";
-import { Endpoint } from "../constants/Endpoint";
-import { uuidv4 } from "../helpers/uuidv4";
-import axios from "axios";
-import { GetSubredditNamesArgs } from "../types/api/requests/GetSubredditNamesArgs";
-import { GetSubredditNamesResponse } from "../types/api/responses/GetSubredditNamesResponse";
-import { RedditClientConfiguration } from "../config/RedditClientConfiguration";
-import { AccessTokenResponse } from "../types/api/responses/AccessTokenResponse";
-import { GetSubredditArgs } from "../types/api/requests/GetSubredditArgs";
-import { GetSubredditResponse } from "../types/api/responses/GetSubredditResponse";
-import { filterPosts } from "./filterPosts";
+import { defaultConfig } from "../config/defaultConfig"
+import { Endpoint } from "../constants/Endpoint"
+import { uuidv4 } from "../helpers/uuidv4"
+import axios from "axios"
+import { GetSubredditNamesArgs } from "../types/api/requests/GetSubredditNamesArgs"
+import { GetSubredditNamesResponse } from "../types/api/responses/GetSubredditNamesResponse"
+import { RedditClientConfiguration } from "../config/RedditClientConfiguration"
+import { AccessTokenResponse } from "../types/api/responses/AccessTokenResponse"
+import { GetSubredditArgs } from "../types/api/requests/GetSubredditArgs"
+import { GetSubredditResponse } from "../types/api/responses/GetSubredditResponse"
+import { filterPosts } from "./filterPosts"
+import { validateConfig } from "../config/configValidator"
 
 export const createRedditClient = (config: RedditClientConfiguration) => {
     const finalConfig = { ...defaultConfig, ...config }
-    const { clientId, secret, userAgent, grantType, deviceId = uuidv4(), debug, postFilters } = finalConfig
+
+    validateConfig(finalConfig)
+
+    const { clientId, secret, userAgent, grantType, deviceId = uuidv4(), debug, postFilters, limit } = finalConfig
     let { matureContent } = finalConfig
 
     const api = axios.create({
@@ -29,7 +33,7 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
             expirationTimestampInMilliseconds = Date.now() + response.expires_in * 1000
         }
 
-        axiosRequestConfig.headers.common["Authorization"] = "Bearer " + token
+        axiosRequestConfig.headers.Authorization = "Bearer " + token
 
         debug?.logToken && console.log("token", token)
 
@@ -41,7 +45,7 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
      */
     const getAccessToken = async (): Promise<AccessTokenResponse> => {
         const params = new URLSearchParams()
-        params.append("grant_type", grantType)
+        params.append("grant_type", grantType!) // TODO: fix "!"
         params.append("device_id", deviceId)
 
         const response = await axios.post<AccessTokenResponse>(Endpoint.AccessToken, params, {
@@ -66,7 +70,7 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
         const nameParam = Array.isArray(name) ? name.join("+") : name
 
         const response = await api.get<GetSubredditResponse<TGetSubredditArgs>>(`/r/${nameParam}/${sortMethod}`, {
-            params: restParams,
+            params: { limit, ...restParams },
         })
 
         return filterPosts(response.data, postFilters)
@@ -109,6 +113,7 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
     }
 
     return {
+        finalConfig,
         getAccessToken,
         getSubreddit,
         getSubredditIterator,

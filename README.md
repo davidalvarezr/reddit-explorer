@@ -2,26 +2,31 @@
    <a href="https://nodei.co/npm/reddit-explorer/"><img src="https://nodei.co/npm/reddit-explorer.png?downloads=true&downloadRank=true&stars=true"></a>
 </p>
 
-[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=bugs)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
-[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=coverage)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
-[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
-[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
-[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
-[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=bugs)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=coverage)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
 
 # reddit-explorer
-To see what has been done on each version, you can consult the 
-[CHANGELOG](https://github.com/davidalvarezr/reddit-explorer/blob/master/CHANGELOG.md).
+**reddit-explorer** is a reddit client that allows you to fetch subreddit content easily. It only has 2 dependencies (typescript & axios).
+
+To see what has been done on each version, you can consult the [CHANGELOG](https://github.com/davidalvarezr/reddit-explorer/blob/master/CHANGELOG.md).
 
 ## Installation
 ### Command line
 ```
 npm install reddit-explorer
+```
+or
+```
+yarn add reddit-explorer
 ```
 
 ### Create a dev application on Reddit (if you do not have already one)
@@ -184,7 +189,7 @@ const clientShowingOnlyPopularPosts = createRedditClient({
 
 ### Loading next results
 
-The API can only load a max amount of 25 posts. To load the next 25 posts, you have to pass the `after` param.
+The API can only load a max amount of 100 posts (the default is 25). To load the next posts, you have to pass the `after` param.
 You can find the value of the `after` in the previous response of the request you made, in `response.after`. It contains
 the `name` (`SubredditData.name`) of the last post in the previous call.
 
@@ -247,6 +252,51 @@ const res = await client.getSubreddit({
     sortMethod: SortingMethod.Top,
     name: ["news", "meme"],
 })
+```
+
+### Reddit simple client
+
+`createRedditSimpleClient` allows to get only the essential. This client will return a modified response containing only:
+- kind
+- title
+- url
+- subreddit
+- thumbnail
+- permalink
+- link
+- createdAtUtc
+- createdAtLocal
+
+For the moment, the simple client only supports `getSubreddit` and `getSubredditNames`.
+```typescript
+const reddit = createRedditSimpleClient({
+    clientId: "<clientId>",
+    secret: "<clientSecret>",
+})
+
+const result = await reddit.getSubreddit({
+    sortMethod: SortingMethod.Hot,
+    name: "memes",
+    fields: ["title", "url"],
+})
+```
+In the above example, I picked only the fields that I needed, here is the response:
+```json5
+{
+  before: null,
+  after: 't3_1aihq82',
+  data: [
+    {
+      title: 'r/Memes is looking for new moderators! Interested? Fill out our application!',
+      url: 'https://docs.google.com/forms/d/e/1FAIpQLSfBlrL6LVOktwIdGubvbJ7REeh9vANiBTIpUecW63PHINQECg/viewform'
+    },
+    {
+      title: 'Worst days in University',
+      url: 'https://i.redd.it/u8hlua9lbkgc1.jpeg'
+    },
+    // some other results...
+  ],
+}
 ```
 
 ---

@@ -8,15 +8,14 @@ import { SimpleGetSubredditArgs, SimplePost } from "../types/api/reddit-simple-c
 import { SimpleGetSubredditResponse } from "../types/api/reddit-simple-client/response/SimpleGetSubredditResponse"
 import { Optional } from "../types/Optional"
 import { GetSubredditNamesResponse } from "../types/api/responses/GetSubredditNamesResponse"
-import { defaultConfig } from "../config/defaultConfig"
 
 /**
  * Same as RedditClient but returns only essentials infos
  * @param options
  */
 export const createRedditSimpleClient = (options: RedditClientConfiguration) => {
-    const finalConfig = { ...defaultConfig, ...options }
-    const api = createRedditClient(finalConfig)
+    const api = createRedditClient(options)
+    const { finalConfig } = api
 
     // TODO: create an type with "optional" fields for the use and non-optional for internal logic
     const getSubreddit = async <T extends SimpleGetSubredditArgs>(
