@@ -1,8 +1,17 @@
 import { filterPosts } from "../../src/client/filterPosts"
-import { GetSubredditResponse } from "../../src"
-import { hasMoreThanNComments } from "../../src"
-import { hasMoreThanNUpvoteRatio } from "../../src"
-import { hasMoreThanNCrossposts } from "../../src"
+import {
+    GetSubredditResponse,
+    hasMoreThanNComments,
+    hasMoreThanNCrossposts,
+    hasMoreThanNUpvoteRatio,
+    isFalse,
+    isTrue,
+    less,
+    more,
+    same,
+    sameOrLess,
+    sameOrMore,
+} from "../../src"
 
 test("Should keep only posts with upvote ration > 0.95", async () => {
     const result = filterPosts(fivePostsFromNews as unknown as GetSubredditResponse, [hasMoreThanNUpvoteRatio(0.95)])
@@ -17,6 +26,56 @@ test("Should keep only posts more than 100 comments AND more than 2 crossposts",
     ])
 
     expect(result.data.children.length).toEqual(2)
+})
+
+test("Should keep only unsaved posts", async () => {
+    const result = filterPosts(fivePostsFromNews as unknown as GetSubredditResponse, [isFalse("saved")])
+
+    expect(result.data.children.length).toEqual(4)
+})
+
+test("Should keep only saved posts", async () => {
+    const result = filterPosts(fivePostsFromNews as unknown as GetSubredditResponse, [isTrue("saved")])
+
+    expect(result.data.children.length).toEqual(1)
+})
+
+test("Should keep posts having 'Macron beats Le Pen in French election – projections - BBC News' as title", async () => {
+    const result = filterPosts(fivePostsFromNews as unknown as GetSubredditResponse, [
+        same("title")("Macron beats Le Pen in French election – projections - BBC News"),
+    ])
+
+    expect(result.data.children.length).toEqual(1)
+})
+
+test("Should keep posts having 22678 ups", async () => {
+    const result = filterPosts(fivePostsFromNews as unknown as GetSubredditResponse, [same("ups")(22678)])
+
+    expect(result.data.children.length).toEqual(1)
+})
+
+test("Should keep posts having 22678 ups or less", async () => {
+    const result = filterPosts(fivePostsFromNews as unknown as GetSubredditResponse, [sameOrLess("ups")(22678)])
+
+    expect(result.data.children.length).toEqual(4)
+})
+
+test("Should keep posts having 22678 ups or more", async () => {
+    const result = filterPosts(fivePostsFromNews as unknown as GetSubredditResponse, [sameOrMore("ups")(22678)])
+
+    expect(result.data.children.length).toEqual(2)
+})
+
+test("Should keep posts having less than 22678 ups", async () => {
+    const result = filterPosts(fivePostsFromNews as unknown as GetSubredditResponse, [less("ups")(22678)])
+
+    expect(result.data.children.length).toEqual(3)
+})
+
+test("Should keep posts having more than 22678 ups", async () => {
+    const result = filterPosts(fivePostsFromNews as unknown as GetSubredditResponse, [more("ups")(22678)])
+
+    expect(result.data.children.length).toEqual(1)
 })
 
 const fivePostsFromNews = {
@@ -34,7 +93,7 @@ const fivePostsFromNews = {
                     subreddit: "news",
                     selftext: "",
                     author_fullname: "t2_dvc31gw7",
-                    saved: false,
+                    saved: true,
                     mod_reason_title: null,
                     gilded: 0,
                     clicked: false,
@@ -417,7 +476,7 @@ const fivePostsFromNews = {
                     upvote_ratio: 0.91,
                     author_flair_background_color: null,
                     subreddit_type: "public",
-                    ups: 19794,
+                    ups: 25666,
                     total_awards_received: 5,
                     media_embed: {},
                     author_flair_template_id: null,

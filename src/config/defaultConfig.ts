@@ -1,7 +1,10 @@
-import { Endpoint } from "../constants/Endpoint"
+import { RedditClientConfiguration } from "./RedditClientConfiguration"
 
-export const defaultConfig = {
+export const defaultConfig: Partial<RedditClientConfiguration> = {
     userAgent: "reddit-explorer npm package (by /u/davalres)",
-    grantType: Endpoint.GrandType,
+    grantType: "client_credentials",
+
+    // request config
     matureContent: false,
+    limit: 25,
 }
