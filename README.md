@@ -2,26 +2,31 @@
    <a href="https://nodei.co/npm/reddit-explorer/"><img src="https://nodei.co/npm/reddit-explorer.png?downloads=true&downloadRank=true&stars=true"></a>
 </p>
 
-[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=bugs)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
-[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=coverage)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
-[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
-[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
-[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
-[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=bugs)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=coverage)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=davidalvarezr_reddit-explorer&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=davidalvarezr_reddit-explorer)
 
 # reddit-explorer
-To see what has been done on each version, you can consult the 
-[CHANGELOG](https://github.com/davidalvarezr/reddit-explorer/blob/master/CHANGELOG.md).
+**reddit-explorer** is a reddit client that allows you to fetch subreddit content easily. It only has 2 dependencies (typescript & axios).
+
+To see what has been done on each version, you can consult the [CHANGELOG](https://github.com/davidalvarezr/reddit-explorer/blob/master/CHANGELOG.md).
 
 ## Installation
 ### Command line
 ```
 npm install reddit-explorer
+```
+or
+```
+yarn add reddit-explorer
 ```
 
 ### Create a dev application on Reddit (if you do not have already one)

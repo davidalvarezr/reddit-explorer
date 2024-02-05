@@ -38,3 +38,21 @@ test("Should get multiple subreddits", async () => {
     expect(subredditNamesMap).toContain("news")
     expect(subredditNamesMap).toContain("meme")
 })
+
+// TODO: mock and check what is given to request instead of testing response
+test("Limit should override config limit", async () => {
+    client = createRedditClient({ clientId: secrets.clientId, secret: secrets.secret, limit: 5 })
+    const res = await client.getSubreddit({
+        sortMethod: SortingMethod.Top,
+        name: ["news", "meme"],
+    })
+    expect(res.data.children).toHaveLength(5)
+
+    client = createRedditClient({ clientId: secrets.clientId, secret: secrets.secret, limit: 5 })
+    const res2 = await client.getSubreddit({
+        sortMethod: SortingMethod.Top,
+        name: ["news", "meme"],
+        limit: 10,
+    })
+    expect(res2.data.children).toHaveLength(10)
+})

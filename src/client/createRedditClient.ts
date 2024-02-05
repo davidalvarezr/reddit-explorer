@@ -113,6 +113,7 @@ export const createRedditClient = (config: RedditClientConfiguration) => {
     }
 
     return {
+        finalConfig,
         getAccessToken,
         getSubreddit,
         getSubredditIterator,
